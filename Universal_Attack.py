@@ -31,8 +31,7 @@ import argparse
 from setup_mnist import MNIST, MNISTModel
 import Utils as util
 import ObjectiveFunc
-import ZO_SVRG as svrg
-import ZO_SGD as sgd
+import FZCGS as fzcgs
 from SysManager import SYS_MANAGER
 
 
@@ -49,10 +48,18 @@ def main():
     MGR.Add_Parameter('eta', MGR.parSet['alpha']/origImgs[0].size)
     MGR.Log_MetaData()
 
-    if(MGR.parSet['optimizer'] == 'ZOSVRG'):
-        delImgAT = svrg.ZOSVRG(delImgAT_Init, MGR, objfunc)
-    elif(MGR.parSet['optimizer'] == 'ZOSGD'):
-        delImgAT = sgd.ZOSGD(delImgAT_Init, MGR, objfunc)
+    #if(MGR.parSet['optimizer'] == 'ZOSVRG'):
+    #    delImgAT = svrg.ZOSVRG(delImgAT_Init, MGR, objfunc)
+    #elif(MGR.parSet['optimizer'] == 'ZOSGD'):
+    #    delImgAT = sgd.ZOSGD(delImgAT_Init, MGR, objfunc)
+    #else:
+    #    print('Please specify a valid optimizer')
+
+
+    if(MGR.parSet['optimizer'] == 'FZCGS'):
+        delImgAT = fzcgs.FZCGS(delImgAT_Init, MGR, objfunc)
+    elif(MGR.parSet['optimizer'] == 'ZO_SCGS'):
+        delImgAT = zo_scgs.ZO_SCGS(delImgAT_Init, MGR, objfunc)
     else:
         print('Please specify a valid optimizer')
 
@@ -72,17 +79,23 @@ def main():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('-optimizer' , default='ZOSVRG', help="choose from ZOSVRG and ZOSGD")
-    parser.add_argument('-q', type=int, default=1, help="Number of random vectors to average over for each gradient estimation")
-    parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
-    parser.add_argument('-M', type=int, default=50, help="Length of each stage/epoch")
-    parser.add_argument('-nStage', type=int, default=1000, help="Number of stages/epochs")
-    parser.add_argument('-const', type=float, default=5, help="Weight put on the attack loss")
+    
+    parser.add_argument('-optimizer' , default='FZCGS', help="choose from FZCGS, ZO-SCGS and SGFFW")
+    parser.add_argument('-q', type=int, default=1, help="batch size for S2 in FZCGS")
+    parser.add_argument('-K', type=float, default=0.1, help="K parameter for FZCGS")
+    parser.add_argument('-L', type=float, default=1, help="L (Lipschitz constant) parameter for FZCGS")
     parser.add_argument('-nFunc', type=int, default=10, help="Number of images being attacked at once")
-    parser.add_argument('-batch_size', type=int, default=5, help="Number of functions sampled for each iteration in the optmization steps")
-    parser.add_argument('-mu', type=float, default=0.01, help="The weighting magnitude for the random vector applied to estimate gradients in ZOSVRG")
-    parser.add_argument('-rv_dist', default='UnitSphere', help="Choose from UnitSphere and UnitBall")
     parser.add_argument('-target_label', type=int, default=1, help="The target digit to attack")
+
+    # Probably not used for our project
+    #parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
+    #parser.add_argument('-M', type=int, default=50, help="Length of each stage/epoch")
+    #parser.add_argument('-nStage', type=int, default=1000, help="Number of stages/epochs")
+    #parser.add_argument('-const', type=float, default=5, help="Weight put on the attack loss")
+    #parser.add_argument('-batch_size', type=int, default=5, help="Number of functions sampled for each iteration in the optmization steps")
+    #parser.add_argument('-rv_dist', default='UnitSphere', help="Choose from UnitSphere and UnitBall")
+
+
     args = vars(parser.parse_args())
 
     for par in args:
