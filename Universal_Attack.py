@@ -32,6 +32,8 @@ from setup_mnist import MNIST, MNISTModel
 import Utils as util
 import ObjectiveFunc
 import FZCGS as fzcgs
+import ZO_SCGS as zo_scgs
+import SGFFW as sgffw
 from SysManager import SYS_MANAGER
 
 
@@ -60,6 +62,8 @@ def main():
         delImgAT = fzcgs.FZCGS(delImgAT_Init, MGR, objfunc)
     elif(MGR.parSet['optimizer'] == 'ZO_SCGS'):
         delImgAT = zo_scgs.ZO_SCGS(delImgAT_Init, MGR, objfunc)
+    elif(MGR.parSet['optimizer'] == 'SGFFW'):
+        delImgAT = sgffw.SGFFW(delImgAT_Init, MGR, objfunc)
     else:
         print('Please specify a valid optimizer')
 
