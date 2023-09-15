@@ -22,6 +22,59 @@ import Utils as util
 
 np.random.seed(2018)
 
+
+class ADV_OBJ_FUNC:
+        def __init__(self, origImgs, delta, nFunc, model):
+                self.origImgs = origImgs
+                self.delta = delta
+                self.nFunc = nFunc
+                self.model = model
+
+
+        def adv_single_f(self, x_img, delta, model):
+                print(x_img.shape)
+                x_img = x_img + delta
+                print(x_img.shape)
+                f_yi_raw = model.predict(x_img) # (todo: before softmax?: gets the prediction) 
+                return f_yi_raw
+
+        def adv_find_second_max_f(self, f_yi_raw):
+                f_j_raw = np.delete(f_yi_raw, np.argmax(f_yi_raw))
+                f_j = np.max(f_j_raw)
+                return f_j
+
+
+        def adv_objective_function(self, origImgs, delta, nFunc):
+
+                """
+                Based on the Gao et al. paper, section 4.3. Not sure if the implementation is correct.
+                We evaluate the i-th image's component function y_i with the original image + a perturbation delta
+                and get the best prediction. (This should be done BEFORE the softmax so idk if this is right).
+                Then from that we get the max value of the raw evaluation but with constraint j != y_i, so this
+                should be the second best prediction (or the first if we remove the best one from the array).
+                Then we compute the max of the difference between the two predictions and 0.
+                We finally iterate through all images (equal to the number of component functions) computing the 
+                summation and averaging by the number of nFunc.
+                """
+
+                summation= float()
+
+                for idx_imgID in range(nFunc):
+
+                        f_yi_raw = self.adv_single_f(origImgs[idx_imgID], delta, self.model)
+                        f_yi = np.max(f_yi_raw)
+
+                        f_j = self.adv_find_second_max_f(f_yi_raw)
+                        partial_out_max = np.max([f_yi - f_j, 0])
+
+                        summation = summation + partial_out_max
+
+                loss = (1/nFunc) * summation
+                return loss
+
+
+#### ORIGINAL
+
 class OBJFUNC:
 
     def __init__(self, MGR, model, origImgs, origLabels):
