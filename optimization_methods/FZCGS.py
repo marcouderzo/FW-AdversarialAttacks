@@ -33,18 +33,6 @@ from PIL import Image
 #
 
 
-
-def estimate_gradient_n(x, MGR, n, d, mu, obj_func): #mu smoothing parameter, e_j (R^d) basis vector where only j-th element is 1, otherwise 0.
-        S1_batch_idx = np.random.choice(np.arange(0, MGR.parSet['nFunc']), n, replace = False) #what is 50? number of elements randomly chosen
-        for j in range(d):
-            e = np.zeros(x.shape)
-            v_estim = np.zeros(x.shape)
-            e[j] = 1  # Set the j-th element of the basis vector to 1 
-            v_estim= v_estim + ((obj_func(x + mu*e[j, :], S1_batch_idx) - obj_func(x - mu*e[j, :], S1_batch_idx)) / (2*mu)) * e[j, :] # e to reshape to x0.shape        
-        return v_estim
-
-
-
 # TODO: this needs clarification, i am not very sure on how to implement it. 
 
 def V(g, u, u_t, gamma, x, OMEGA): 
@@ -96,25 +84,43 @@ def FZCGS(x_0, n, q, K, L, obj_func, MGR):
     x_k = x_0.copy()
     e = np.eye(d)
 
-    q_val = 50
+    ### FEASIBLE SET ###
+    num = 2000
+    Q = np.eye(d)*num
+    Qrm = np.full(Q.shape, num/d)
+    Q = Q - Qrm
+    Q= np.concatenate((Q,-Q), axis=1)
+    ####################
+
+    q_val = 50 #B
 
     OMEGA = np.random.uniform(-1, 1, (10000, d))
 
-    for k in range(0, K): #K-1?
-        v_prev = v_k 
-        x_prev = x_k 
-        # probably change where these above are set
+    for k in range(0, K): #it goes from 0 to K-1
+        v_prev = v_k.copy() # is it right to copy prev here?
+        x_prev = x_k.copy() # is it right to copy prev here?
+        
         if np.mod(k, q) == 0: 
-            v_k = estimate_gradient_n(x_k, MGR, n, d, mu)
+            S1_batch_idx = np.random.choice(np.arange(0, MGR.parSet['nFunc']), n, replace = False) #what is 50? number of elements randomly chosen
+            e = np.zeros(x_k.shape)
+            v_k = np.zeros(x_k.shape)
+            for j in range(d):
+                e[j] = 1  # Set the j-th element of the basis vector to 1 
+                v_k= v_k + ((obj_func(x_k + mu*e[j, :], S1_batch_idx) - obj_func(x_k - mu*e[j, :], S1_batch_idx)) / (2*mu)) * e[j, :] # e to reshape to x0.shape        
         else:
             S2_batch_idx = np.random.choice(np.arange(0, MGR.parSet['nFunc']), q, replace=True) #false?
-            v_estim = np.zeros(x_k.shape)
+            v_k = np.zeros(x_k.shape)
             for j in range(q):
-                v_estim = (1/q)* (obj_func(x_k, S2_batch_idx[j: j+1]) - obj_func(x_prev, S2_batch_idx[j: j+1]) + v_prev)
-                
+                for k in range(q_val):
+                    # check this, not sure if i messed it up
+                    v_k = v_k + ((((obj_func(x_k + mu*e[j,:], S2_batch_idx[j: j+1]) - obj_func(x_k - mu * e[j, :], S2_batch_idx[j: j+1]))) * e[j, :])) / 2(*mu)    -    (((obj_func(x_prev + mu*e[j,:], S2_batch_idx[j: j+1]) - obj_func(x_prev - mu * e[j, :], S2_batch_idx[j: j+1]))) * e[j, :]) / (2*mu)
+                v_k = v_k + v_prev
+            v_k = (1/q_val)*(v_k)
         
         x_k = condg(v_k, x_k, gamma, eta, OMEGA)
         print(x_k)
+        
+        # Insert here print current loss at iteration index
 
         if(obj_func.Loss_Overall < best_Loss):
             best_Loss = obj_func.Loss_Overall
