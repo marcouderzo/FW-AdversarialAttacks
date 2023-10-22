@@ -26,14 +26,15 @@ sys.path.append('optimization_methods/')
 
 import os
 import numpy as np
+#from keras.utils import np_utils 
 import argparse
 
 from setup_mnist import MNIST, MNISTModel
 import Utils as util
 import ObjectiveFunc
 import FZCGS as fzcgs
-import ZO_SCGS as zo_scgs
-import SGFFW as sgffw
+#import ZO_SCGS as zo_scgs
+#import SGFFW as sgffw
 from SysManager import SYS_MANAGER
 
 
@@ -43,12 +44,13 @@ def main():
 
     data, model =  MNIST(), MNISTModel(restore="models/mnist", use_log=True)
     origImgs, origLabels, origImgID = util.generate_attack_data_set(data, model, MGR)
-
+    print("here")
     delImgAT_Init = np.zeros(origImgs[0].shape)
     objfunc = ObjectiveFunc.OBJFUNC(MGR, model, origImgs, origLabels)
 
     MGR.Add_Parameter('eta', MGR.parSet['alpha']/origImgs[0].size)
     MGR.Log_MetaData()
+    print("here1")
 
     #if(MGR.parSet['optimizer'] == 'ZOSVRG'):
     #    delImgAT = svrg.ZOSVRG(delImgAT_Init, MGR, objfunc)
@@ -59,14 +61,15 @@ def main():
 
 
     if(MGR.parSet['optimizer'] == 'FZCGS'):
-        delImgAT = fzcgs.FZCGS(delImgAT_Init, MGR, objfunc)
-    elif(MGR.parSet['optimizer'] == 'ZO_SCGS'):
-        delImgAT = zo_scgs.ZO_SCGS(delImgAT_Init, MGR, objfunc)
-    elif(MGR.parSet['optimizer'] == 'SGFFW'):
-        delImgAT = sgffw.SGFFW(delImgAT_Init, MGR, objfunc)
+        delImgAT = fzcgs.FZCGS(delImgAT_Init, MGR.parSet['nStage'], MGR.parSet['q'], MGR.parSet['K'], MGR.parSet['L'], objfunc, MGR)
+    #elif(MGR.parSet['optimizer'] == 'ZO_SCGS'):
+    #    delImgAT = zo_scgs.ZO_SCGS(delImgAT_Init, MGR, objfunc)
+    #elif(MGR.parSet['optimizer'] == 'SGFFW'):
+    #    delImgAT = sgffw.SGFFW(delImgAT_Init, MGR, objfunc)
     else:
         print('Please specify a valid optimizer')
 
+    print("here2")
 
     for idx_ImgID in range(MGR.parSet['nFunc']):
         currentID = origImgID[idx_ImgID]
@@ -92,12 +95,12 @@ if __name__ == "__main__":
     parser.add_argument('-target_label', type=int, default=1, help="The target digit to attack")
 
     # Probably not used for our project
-    #parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
-    #parser.add_argument('-M', type=int, default=50, help="Length of each stage/epoch")
-    #parser.add_argument('-nStage', type=int, default=1000, help="Number of stages/epochs")
-    #parser.add_argument('-const', type=float, default=5, help="Weight put on the attack loss")
-    #parser.add_argument('-batch_size', type=int, default=5, help="Number of functions sampled for each iteration in the optmization steps")
-    #parser.add_argument('-rv_dist', default='UnitSphere', help="Choose from UnitSphere and UnitBall")
+    parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
+    parser.add_argument('-M', type=int, default=50, help="Length of each stage/epoch")
+    parser.add_argument('-nStage', type=int, default=1000, help="Number of stages/epochs")
+    parser.add_argument('-const', type=float, default=5, help="Weight put on the attack loss")
+    parser.add_argument('-batch_size', type=int, default=5, help="Number of functions sampled for each iteration in the optmization steps")
+    parser.add_argument('-rv_dist', default='UnitSphere', help="Choose from UnitSphere and UnitBall")
 
 
     args = vars(parser.parse_args())
