@@ -31,8 +31,8 @@ import argparse
 
 from setup_mnist import MNIST, MNISTModel
 import Utils as util
-import ObjectiveFunc
-import FZCGS as fzcgs
+import optimization_methods.ObjectiveFunc as ObjectiveFunc
+import optimization_methods.FZCGS as fzcgs
 #import ZO_SCGS as zo_scgs
 #import SGFFW as sgffw
 from SysManager import SYS_MANAGER
@@ -108,7 +108,8 @@ if __name__ == "__main__":
     for par in args:
         MGR.Add_Parameter(par, args[par])
 
-    MGR.Add_Parameter('save_path', 'Results/' + MGR.parSet['optimizer'] + '/')
+    
+    MGR.Add_Parameter('save_path', 'Results/' + MGR.parSet['optimizer']+'/')
     MGR.parSet['batch_size'] = min(MGR.parSet['batch_size'], MGR.parSet['nFunc'])
 
     main()
