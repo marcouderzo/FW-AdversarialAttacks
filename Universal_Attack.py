@@ -50,7 +50,6 @@ def main():
 
     MGR.Add_Parameter('eta', MGR.parSet['alpha']/origImgs[0].size)
     MGR.Log_MetaData()
-    print("here1")
 
     #if(MGR.parSet['optimizer'] == 'ZOSVRG'):
     #    delImgAT = svrg.ZOSVRG(delImgAT_Init, MGR, objfunc)
@@ -69,7 +68,6 @@ def main():
     else:
         print('Please specify a valid optimizer')
 
-    print("here2")
 
     for idx_ImgID in range(MGR.parSet['nFunc']):
         currentID = origImgID[idx_ImgID]
