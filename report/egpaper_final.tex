@@ -21,14 +21,14 @@
 
 % Pages are numbered in submission mode, and unnumbered in camera-ready
 %\ifcvprfinal\pagestyle{empty}\fi
-\setcounter{page}{4321}
+\setcounter{page}{1}
 \begin{document}
 
 %%%%%%%%% TITLE
-\title{Author Guidelines and template for VCS report}
+\title{Zeroth-Order Optimization for Black-Box Adversarial Attacks}
 
-\author{First Author\\
-{\tt\small firstauthor@i1.org}
+\author{Marco Uderzo, mat. 2096998\\
+{\tt\small marco.uderzo@studenti.unipd.it}
 % For a paper whose authors are all at the same institution,
 % omit the following lines up until the closing ``}''.
 % Additional authors and addresses can be added with ``\and'',
@@ -37,6 +37,9 @@
 \and
 Second Author\\
 {\tt\small secondauthor@i2.org}
+\and
+Third Author\\
+{\tt\small thirdauthor@i3.org}
 }
 
 \maketitle
@@ -44,36 +47,33 @@ Second Author\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-   The ABSTRACT is to be in fully-justified italicized text, at the top
-   of the left-hand column, below the author and affiliation
-   information. Use the word ``Abstract'' as the title, in 12-point
-   Times, boldface type, centered relative to the column, initially
-   capitalized. The abstract is to be in 10-point, single-spaced type.
-   Leave two blank lines after the Abstract, then begin the main text.
-   Abstract should be no longer than 300 words.
+   The goal of this project is to compare the behaviour and performance
+   of three zeroth-order variants of the Frank-Wolfe Algorithm, aimed at 
+   solving constrained optimization problems with a better iteration complexity,
+   expecially with respect to oracle queries.
+   We take into consideration: Faster Zeroth-Order Conditional Gradient Sliding (FZCGS)
+   from Gao et al., Zeroth-Order Stochastic Conditional Gradient Sliding 
+   (ZO-SCGS) from Lobanov et al., and Stochastic Gradient Free Frank Wolfe 
+   (SGFFW) from Sahu et al. The theory behind these algorithms is presented,
+   with an emphasis on proving that the performance are guaranteed. Then,
+   the aforementioned algorithms are tested on a black-box adversarial attack
+   on the MNIST dataset. 
+
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
 
-Please follow the guidelines that have been uploaded on Moodle. Remember also that the report should be no longer than six pages (plus references).
 
-\subsection{Language}
 
-All manuscripts must be in English.
+\subsection{Deterministic Frank-Wolfe Algorithm}
 
-\subsection{Suggested Structure}
 
-The following is a suggested structure for your report:
 
-\begin{itemize}
-	\item Introduction (10\%): describe the problem you are working on, why it's important, and an overview of your results.
-	\item Related Work (10\%): discuss published work or similar apps that relates to your project. How is your approach similar or different from others?
-	\item Dataset (15\%): describe the data you are working with for your project. What type of data is it? Where did it come from? How much data are you working with? Did you have to do any preprocessing, filtering, etc., and why?
-	\item Method (30\%): discuss your approach for solving the problems that you set up in the introduction. Why is your approach the right thing to do? Did you consider alternative approaches? It may be helpful to include figures, diagrams, or tables to describe your method or compare it with others.
-	\item Experiments (30\%): discuss the experiments that you performed. The exact experiments will vary depending on the project, but you might compare with prior work, perform an ablation study to determine the impact of various components of your system, experiment with different hyperparameters or architectural choices. You should include graphs, tables, or other figures to illustrate your experimental results.
-	\item Conclusion (5\%): summarize your key results; what have you learned? Suggest ideas for future extensions.
-\end{itemize}	
+
+
+
+
 
 %------------------------------------------------------------------------
 \section{Formatting your paper}
