@@ -8,31 +8,31 @@
 
 <p align="center">
   
-<img src="/Sample-Output/ZOSVRG-Sample-1/0004.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0006.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0019.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0024.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0027.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0033.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0042.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0048.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0049.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/0056.png" width="80" height="80">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0004.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0006.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0019.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0024.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0027.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0033.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0042.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0048.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0049.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/0056.png" width="70" height="70">
 
 </p>
 
 <p align="center">
 
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id4_Orig4_Adv9.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id6_Orig4_Adv8.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id19_Orig4_Adv2.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id24_Orig4_Adv9.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id27_Orig4_Adv9.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id33_Orig4_Adv2.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id42_Orig4_Adv9.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id48_Orig4_Adv9.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id49_Orig4_Adv9.png" width="80" height="80">
-<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id56_Orig4_Adv9.png" width="80" height="80">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id4_Orig4_Adv9.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id6_Orig4_Adv8.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id19_Orig4_Adv2.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id24_Orig4_Adv9.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id27_Orig4_Adv9.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id33_Orig4_Adv2.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id42_Orig4_Adv9.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id48_Orig4_Adv9.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id49_Orig4_Adv9.png" width="70" height="70">
+<img src="/Sample-Output/ZOSVRG-Sample-1/Adv_id56_Orig4_Adv9.png" width="70" height="70">
 
 </p>
 
