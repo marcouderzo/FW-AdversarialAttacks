@@ -48,7 +48,7 @@ We take into consideration: Faster Zeroth-Order Conditional Gradient Sliding (FZ
 from Gao et al., Zeroth-Order Stochastic Conditional Gradient Sliding 
 (ZO-SCGS) from Lobanov et al., and Stochastic Gradient Free Frank Wolfe 
 (SGFFW) from Sahu et al. The theory behind these algorithms is presented,
-with an emphasis on proving that the performance are guaranteed. Then,
+with an emphasis on proving that the performances claimed are guaranteed. Then,
 the aforementioned algorithms are tested on a black-box adversarial attack
 on the MNIST dataset. 
 
