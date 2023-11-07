@@ -38,7 +38,7 @@
 
 </br>
 
-### Project Description
+## Project Description
 
 The goal of this project is to compare the behaviour and performance
 of three zeroth-order variants of the Frank-Wolfe Algorithm, aimed at 
