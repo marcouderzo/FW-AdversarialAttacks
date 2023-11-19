@@ -1,0 +1,20 @@
+save_path Results/SGFFW
+optimizer SGFFW
+q 3
+K 0.1
+L 50
+m 50
+grad_approx_scheme KWSA
+nFunc 10
+target_label 4
+alpha 1.0
+M 50
+nStage 1000
+const 3
+batch_size 5
+rv_dist UnitSphere
+eta 0.0012755102040816326
+Iteration Index: 0 Query_Count: 1568 Loss_Overall: 339.5137768818319 Loss_Distortion: 339.5137768818319 Loss_Attack: 0.0 Current_Best_Distortion: 339.5137768818319
+Iteration Index: 1 Query_Count: 3136 Loss_Overall: 339.5137768818319 Loss_Distortion: 339.5137768818319 Loss_Attack: 0.0 Current_Best_Distortion: 339.5137768818319
+Iteration Index: 2 Query_Count: 4704 Loss_Overall: 339.5137768818319 Loss_Distortion: 339.5137768818319 Loss_Attack: 0.0 Current_Best_Distortion: 339.5137768818319
+Iteration Index: 3 Query_Count: 6272 Loss_Overall: 339.5137768818319 Loss_Distortion: 339.5137768818319 Loss_Attack: 0.0 Current_Best_Distortion: 339.5137768818319

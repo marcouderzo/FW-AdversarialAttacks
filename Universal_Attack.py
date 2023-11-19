@@ -21,25 +21,29 @@
 ## limitations under the License.
 
 import sys
+
 sys.path.append('models/')
 sys.path.append('optimization_methods/')
 
 import os
 import numpy as np
-#from keras.utils import np_utils 
+from keras.utils import np_utils
 import argparse
 
 from setup_mnist import MNIST, MNISTModel
 import Utils as util
 import optimization_methods.ObjectiveFunc as ObjectiveFunc
 import optimization_methods.FZCGS as fzcgs
-#import ZO_SCGS as zo_scgs
-#import SGFFW as sgffw
+import optimization_methods.SGFFW as sgffw
+# optimization_methods.ZO_SCGS as zo_scgs
+
+#from problem import Problem # nope
+
 from SysManager import SYS_MANAGER
 
-
-
 MGR = SYS_MANAGER()
+
+
 def main():
 
     data, model =  MNIST(), MNISTModel(restore="models/mnist", use_log=True)
@@ -50,23 +54,38 @@ def main():
     MGR.Add_Parameter('eta', MGR.parSet['alpha']/origImgs[0].size)
     MGR.Log_MetaData()
 
-    #if(MGR.parSet['optimizer'] == 'ZOSVRG'):
-    #    delImgAT = svrg.ZOSVRG(delImgAT_Init, MGR, objfunc)
-    #elif(MGR.parSet['optimizer'] == 'ZOSGD'):
-    #    delImgAT = sgd.ZOSGD(delImgAT_Init, MGR, objfunc)
-    #else:
-    #    print('Please specify a valid optimizer')
 
+    ########### OPTIMIZER CHOICE ############
 
     if(MGR.parSet['optimizer'] == 'FZCGS'):
         delImgAT = fzcgs.FZCGS(delImgAT_Init, MGR.parSet['nStage'], MGR.parSet['q'], MGR.parSet['K'], MGR.parSet['L'], objfunc, MGR)
-    #elif(MGR.parSet['optimizer'] == 'ZO_SCGS'):
-    #    delImgAT = zo_scgs.ZO_SCGS(delImgAT_Init, MGR, objfunc)
-    #elif(MGR.parSet['optimizer'] == 'SGFFW'):
-    #    delImgAT = sgffw.SGFFW(delImgAT_Init, MGR, objfunc)
+
+    elif(MGR.parSet['optimizer'] == 'SGFFW'):
+        delImgAT = sgffw.SGFFW(delImgAT_Init, MGR.parSet['nStage'], MGR.parSet['m'], objfunc, MGR.parSet['grad_approx_scheme'], MGR)
+
+    ########################################
+
+
+
+    ########### NOT WORKING ##############
+
+    # TODO: Actually implement the generic algorithm and adapt it
+    #       for the Adversarial Attack Problem in Gao et al.
+
+    #elif (MGR.parSet['optimizer'] == 'ZO_SCGS'):
+    #    problem = Problem(100)
+    #    # noise level
+    #    problem.sigma = 1e-4
+    #    x0 = np.zeros((problem.size, 1))
+    #    x0[0] = 1.0
+
+    #    delImgAT = zo_scgs.ZO_SCGS(problem, x0, MGR)
+
+
+    #######################################
+
     else:
         print('Please specify a valid optimizer')
-
 
     for idx_ImgID in range(MGR.parSet['nFunc']):
         currentID = origImgID[idx_ImgID]
@@ -81,13 +100,12 @@ def main():
     sys.stdout.flush()
     MGR.logHandler.close()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    
-    parser.add_argument('-optimizer' , default='FZCGS', help="choose from FZCGS, ZO-SCGS and SGFFW")
-    parser.add_argument('-q', type=int, default=3, help="batch size for S2 in FZCGS")
-    parser.add_argument('-K', type=float, default=0.1, help="K parameter for FZCGS")
-    parser.add_argument('-L', type=float, default=50, help="L (Lipschitz constant) parameter for FZCGS")
+
+    ##### GENERAL PARAMETERS #####
+    parser.add_argument('-optimizer', default='SGFFW', help="choose from FZCGS, ZO-SCGS, ZSCG, and SGFFW")
     parser.add_argument('-nFunc', type=int, default=10, help="Number of images being attacked at once")
     parser.add_argument('-target_label', type=int, default=4, help="The target digit to attack")
     parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
@@ -98,13 +116,25 @@ if __name__ == "__main__":
     parser.add_argument('-rv_dist', default='UnitSphere', help="Choose from UnitSphere and UnitBall")
 
 
+    ##### FZCGS PARAMETERS #####
+    parser.add_argument('-q', type=int, default=3, help="batch size for S2 in FZCGS")
+    parser.add_argument('-K', type=float, default=0.1, help="K parameter for FZCGS")
+    parser.add_argument('-L', type=float, default=50, help="L (Lipschitz constant) parameter for FZCGS") #change Lipshitz constant?
+    
+
+    ##### SGFFW PARAMETERS ####
+    parser.add_argument('-grad_approx_scheme', default='KWSA', help="Choose stochastic gradient approximation scheme between KWSA, RDSA and I-RDSA")
+    parser.add_argument('-m', type = float, default=50, help="number of random vectors for I-RDSA approximation scheme (SGFFW)")
+
+
     args = vars(parser.parse_args())
+
+    MGR.Add_Parameter('save_path', 'Results/' + args['optimizer'])
 
     for par in args:
         MGR.Add_Parameter(par, args[par])
 
-    
-    MGR.Add_Parameter('save_path', 'Results/' + MGR.parSet['optimizer']+'/')
+
     MGR.parSet['batch_size'] = min(MGR.parSet['batch_size'], MGR.parSet['nFunc'])
 
     main()

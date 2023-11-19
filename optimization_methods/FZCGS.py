@@ -6,16 +6,16 @@ np.random.seed(2023)
 def condg(g_0, u_0, gamma, eta, OMEGA):
     u_t = u_0.reshape(-1)
     g_t = g_0.reshape(-1)
-    t = 0
+    t = 0 # timesteps 
     alpha_t=1
 
     while(True):
         u_expanded = np.repeat(np.expand_dims(u_t,axis=1),OMEGA.shape[1],axis=1)
-        v_idx = np.argmax(np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA+u_expanded))
-        v = OMEGA[:,v_idx]
-        dot = np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA[:,v_idx]+u_t)
+        v_i = np.argmax(np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA+u_expanded))
+        v = OMEGA[:,v_i]
+        dot = np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA[:,v_i]+u_t)
 
-        if dot <= eta or alpha_t < 0.00001 or t==10000000:  # v_t is indeed the Frank-Wolfe gap.
+        if dot <= eta or alpha_t < 0.00001 or t==10000000:
             return u_t.reshape(u_0.shape) 
         
         a_dot = np.dot((1/gamma)*(u_t - u_0.reshape(-1)) - g_t , v-u_t ) # to check if (u_t - u_0.reshape(-1)) is correct.
@@ -39,7 +39,7 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
    
     shape = x_0.shape # For MNIST images, shape is 28x28
     
-    d = shape[0]*shape[1] # dimensionality is sizes of x_0 multiplied.
+    d = shape[0]*shape[1] # number of iterations is sizes of x_0 multiplied.
     #print("d = " + str(d))
     #print("x_0 shapes: " + str(shape[0]) + " " + str(x_0.shape[1]))
 
