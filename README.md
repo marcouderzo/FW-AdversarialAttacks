@@ -40,17 +40,20 @@
 
 ## Project Description
 
-The goal of this project is to compare the behaviour and performance
-of three zeroth-order variants of the Frank-Wolfe Algorithm, aimed at 
-solving constrained optimization problems with a better iteration complexity,
-expecially with respect to oracle queries.
-We take into consideration: Faster Zeroth-Order Conditional Gradient Sliding (FZCGS)
-from Gao et al., Zeroth-Order Stochastic Conditional Gradient Sliding 
-(ZO-SCGS) from Lobanov et al., and Stochastic Gradient Free Frank Wolfe 
-(SGFFW) from Sahu et al. The theory behind these algorithms is presented,
-with an emphasis on proving that the performances claimed are guaranteed. Then,
-the aforementioned algorithms are tested on a black-box adversarial attack
-on the MNIST dataset. 
+ The goal of this project is to compare the behaviour and performance
+ of two three Zeroth-Order variants of the Frank-Wolfe Algorithm, aimed at 
+ solving constrained optimization problems with a better iteration complexity,
+ expecially with respect to oracle queries.
+ 
+ We take into consideration: Faster Zeroth-Order Conditional Gradient Sliding (FZCGS)
+ (Gao et al., 2018) and Stochastic Gradient Free Frank Wolfe 
+ (SGFFW) (Sahu et al., 2019). The latter algorithm branches off into three slightly different ones,
+ depending on the Stochastic Approximation Technique used, namely: classical Kiefer-Wolfowitz
+ Stochastic Approximation (KWSA) (Kiefer and Wolfowitz, 1952), Random Directions Stochastic Approximation
+ (RDSA) (Nesterov and Spokoiny, 2011; Duchi et al., 2015), and an Improvized RDSA (IRDSA). 
+
+ The theory behind these algorithms is presented, with an emphasis on proving that the performance are guaranteed. 
+ Then, the aforementioned algorithms are tested on a black-box adversarial attack on the MNIST dataset. 
 
 ## Base Repositories
 
