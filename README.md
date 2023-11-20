@@ -50,7 +50,7 @@
  (SGFFW) (Sahu et al., 2019). The latter algorithm branches off into three slightly different ones,
  depending on the Stochastic Approximation Technique used, namely: classical Kiefer-Wolfowitz
  Stochastic Approximation (KWSA) (Kiefer and Wolfowitz, 1952), Random Directions Stochastic Approximation
- (RDSA) (Nesterov and Spokoiny, 2011; Duchi et al., 2015), and an Improvized RDSA (IRDSA). 
+ (RDSA) (Nesterov and Spokoiny, 2011; Duchi et al., 2015), and an Improvised RDSA (IRDSA). 
 
  The theory behind these algorithms is presented, with an emphasis on proving that the performance are guaranteed. 
  Then, the aforementioned algorithms are tested on a black-box adversarial attack on the MNIST dataset. 
