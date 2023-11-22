@@ -65,25 +65,6 @@ def main():
 
     ########################################
 
-
-
-    ########### NOT WORKING ##############
-
-    # TODO: Actually implement the generic algorithm and adapt it
-    #       for the Adversarial Attack Problem in Gao et al.
-
-    #elif (MGR.parSet['optimizer'] == 'ZO_SCGS'):
-    #    problem = Problem(100)
-    #    # noise level
-    #    problem.sigma = 1e-4
-    #    x0 = np.zeros((problem.size, 1))
-    #    x0[0] = 1.0
-
-    #    delImgAT = zo_scgs.ZO_SCGS(problem, x0, MGR)
-
-
-    #######################################
-
     else:
         print('Please specify a valid optimizer')
 
@@ -105,7 +86,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     ##### GENERAL PARAMETERS #####
-    parser.add_argument('-optimizer', default='SGFFW', help="choose from FZCGS, ZO-SCGS, ZSCG, and SGFFW")
+    parser.add_argument('-optimizer', default='SGFFW', help="choose from FZCGS and SGFFW")
     parser.add_argument('-nFunc', type=int, default=10, help="Number of images being attacked at once")
     parser.add_argument('-target_label', type=int, default=4, help="The target digit to attack")
     parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")

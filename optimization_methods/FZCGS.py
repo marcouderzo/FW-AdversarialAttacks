@@ -81,7 +81,7 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
 
     # The code is using the original obj_func from the git repo. We need to implement the adversarial obj_func from the Gao et al. paper
 
-    for k in range(200): # iterations, change to N
+    for k in range(N): # iterations, change to N
 
         if np.mod(k, q) == 0: 
             S1_batch_idx = np.random.choice(np.arange(0, MGR.parSet['nFunc']), n, replace = False) 
@@ -113,14 +113,14 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
             v_k = (1/q_val)*(1/(2*mu))*(v_k/q)+v_prev
             
         
-        ## at the first iteration of the for loop, k=0 so it doesn't jump to the else branch, and therefore v_prev and x_prev are safe to put here
         v_prev = v_k.copy() 
         x_prev = x_k.copy() 
 
         x_k = condg(v_k, x_k, gamma, eta, OMEGA)
-        #x_k = CG_other(v_k, x_k, gamma,eta,OMEGA)
         #print("New Perturbation x_k:", x_k[:,:,0])
-        
+
+
+        obj_func.evaluate(x_k, np.array([]), False)
 
         print('Iteration Index: ', k)
         obj_func.print_current_loss()
