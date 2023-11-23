@@ -52,29 +52,29 @@ def SGFFW(x_0, N, m, obj_func, grad_approx_scheme, MGR):
             for i in range(d):
                 g_t = g_t + ((obj_func.evaluate(x_t + c_t * e[i, :].reshape(x_0.shape), batch_idx[t:t+1]) - obj_func.evaluate(x_t, batch_idx[t:t+1])) / c_t * e[i, :].reshape(x_0.shape))
         
-        print("g_t: {}".format(type(g_t)))
+        #print("g_t: {}".format(type(g_t)))
         #print(g_t)
 
         d_t = (1 - rho_t)*d_t + rho_t * g_t.reshape(-1)
 
-        print("d_t: {}".format(type(d_t)))
+        #print("d_t: {}".format(type(d_t)))
 
         v_t = C[:, np.argmin(np.dot(d_t, C))]
         v_t = v_t.reshape(x_0.shape)
 
-        print("x_t: {}".format(x_t.shape))
-        #print(x_t.shape)
-        #print(gamma_t)
+        #print("x_t: {}".format(x_t.shape))
+
         #print(np.argmin(np.dot(d_t, C)))
-        print("v_t: {}".format(v_t.shape))
-        #print(v_t)
+        #print("v_t: {}".format(v_t.shape))
+
         #v_t = -np.sign(d_t)
         #v_t = v_t.reshape(x_0.shape)
-        print("updated v_t: {}".format(v_t.shape))
+
+        #print("updated v_t: {}".format(v_t.shape))
 
         x_t = (1-gamma_t)*x_t + gamma_t*v_t
         
-        print("updated x_t: {}".format(x_t.shape))
+        #print("updated x_t: {}".format(x_t.shape))
 
 
         obj_func.evaluate(x_t,np.array([]),False)
