@@ -104,7 +104,7 @@ if __name__ == "__main__":
     
 
     ##### SGFFW PARAMETERS ####
-    parser.add_argument('-grad_approx_scheme', default='I-RDSA', help="Choose stochastic gradient approximation scheme between KWSA, RDSA and I-RDSA")
+    parser.add_argument('-grad_approx_scheme', default='KWSA', help="Choose stochastic gradient approximation scheme between KWSA, RDSA and I-RDSA")
     parser.add_argument('-m', type = float, default=50, help="number of random vectors for I-RDSA approximation scheme (SGFFW)")
 
 

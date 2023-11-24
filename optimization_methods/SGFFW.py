@@ -29,14 +29,12 @@ def SGFFW(x_0, N, m, obj_func, grad_approx_scheme, MGR):
         g_t = np.zeros(x_t.shape)
 
         if grad_approx_scheme == 'RDSA':
-            numerator = 4
             rho_t = 4 / ((np.power(d, 1/3)) * np.power(t+8, 1/3))
             c_t = 2 / (np.power(d, 3/2)*np.power(t+8, 1/3))
             z_t = np.random.normal(size=(x_0.shape[0], x_0.shape[1], 1))
             g_t = (obj_func.evaluate(x_t + c_t * z_t[:,:, :], batch_idx[t:t+1]) - obj_func.evaluate(x_t, batch_idx[t:t+1])) / c_t * z_t[:, :, :]
         
         if grad_approx_scheme == 'I-RDSA':
-            numerator = 4
             rho_t = 4 / (np.power(1+(d/m), 1/3) * np.power(t+8, 2/3))
             c_t = (2 / np.sqrt(m)) / (np.power(d, 3/2) * np.power(t+8, 1/3))
             z_it = np.random.normal(size=(x_0.shape[0], x_0.shape[1], m))
@@ -45,7 +43,6 @@ def SGFFW(x_0, N, m, obj_func, grad_approx_scheme, MGR):
             g_t = g_t / m
         
         if grad_approx_scheme == 'KWSA':
-            numerator = 8
             rho_t = 4 / (np.power(t+8, 2/3))
             c_t = 2 / (np.power(d, 1/2) * np.power(t+8, 1/3))
             e = np.eye(d)
