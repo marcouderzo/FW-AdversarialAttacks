@@ -15,7 +15,7 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
         v = OMEGA[:,v_i]
         dot = np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA[:,v_i]+u_t)
 
-        if dot <= eta or alpha_t < 0.00001 or t==10000000:
+        if dot <= eta or t==10000000:
             return u_t.reshape(u_0.shape) 
         
         a_dot = np.dot((1/gamma)*(u_t - u_0.reshape(-1)) - g_t , v-u_t ) # to check if (u_t - u_0.reshape(-1)) is correct.
@@ -28,7 +28,7 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
 
 
 
-def FZCGS(x_0, N, q, K, L, obj_func, MGR):
+def FZCGS(x_0, N, q, K, L, obj_func, MGR) -> np.NDArray:
 
     best_Loss = 1e10
     best_delImgAT = x_0  # at the end, x_k will be -> best_delImgAT
