@@ -27,7 +27,7 @@ sys.path.append('optimization_methods/')
 
 import os
 import numpy as np
-from keras.utils import np_utils
+#from keras.utils import np_utils
 import argparse
 
 from setup_mnist import MNIST, MNISTModel
@@ -35,9 +35,6 @@ import Utils as util
 import optimization_methods.ObjectiveFunc as ObjectiveFunc
 import optimization_methods.FZCGS as fzcgs
 import optimization_methods.SGFFW as sgffw
-# optimization_methods.ZO_SCGS as zo_scgs
-
-#from problem import Problem # nope
 
 from SysManager import SYS_MANAGER
 

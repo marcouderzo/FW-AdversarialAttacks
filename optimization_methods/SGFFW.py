@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 np.random.seed(2023)
 
-def SGFFW(x_0, N, m, obj_func, grad_approx_scheme, MGR) -> np.NDArray:
+def SGFFW(x_0, N, m, obj_func, grad_approx_scheme, MGR):
     best_Loss = 1e10
     best_delImgAT = x_0  #x_t perturbation will be saved in best_delImgAT
     d = x_0.shape[0]*x_0.shape[1] # number of iterations is sizes of x_0 multiplied.

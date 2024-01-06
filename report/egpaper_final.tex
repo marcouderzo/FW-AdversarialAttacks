@@ -28,7 +28,8 @@
 \title{Zeroth-Order Frank-Wolfe Optimization for Black-Box Adversarial Attacks}
 
 \author{Marco Uderzo  \\
-{\tt\small marco.uderzo@studenti.unipd.it, 2096998}
+{\tt\small marco.uderzo@studenti.unipd.it}\\ 
+\tt \small Student ID: 2096998
 % For a paper whose authors are all at the same institution,
 % omit the following lines up until the closing ``}''.
 % Additional authors and addresses can be added with ``\and'',
@@ -59,112 +60,79 @@
 %%%%%%%%% BODY TEXT
 \section{Introduction}
 
+The Frank-Wolfe algorithm, also known as the conditional gradient method, 
+is an iterative optimization technique used for constrained convex optimization problems. 
+It was proposed by Marguerite Frank and Philip Wolfe in 1956, and nowadays finds various applications
+in the field of machine learning. It approximates the objective function by a first-order Taylor approximation.
+The algorithm iteratively selects a direction that minimizes the linear approximation of the objective function
+within the feasible set C. This direction is then combined with the current solution in a convex combination, and the
+process is repeated until convergence.
+
+In particular, the Frank-Wolfe algorithm excels in constrained optimization problems with a closed convex set C:
+
+\[
+\min _{x \in C} f(x)
+\]
+
+The problem formulation can vary widely; for example, Gao et al. deal with a variant tailored for finite-sum minimization problems, in which
+the component functions $ f_{i}(x) $ are summed up as follows:
+
+\[
+\min _{x \in \Omega} F(x)=\frac{1}{n} \sum_{i=1}^{n} f_{i}(x)
+\]
+
+Sahu et al., on the other hand, in order to estimate the loss function f(x), deal with a variant that uses a stochastic zeroth-order oracle.
+The loss function is therefore defined as:
+
+\[
+\min _{x \in C} f(x)=\min _{x \in C} \mathbb{E}_{y}[F(x, y)]
+\]
+
+This paper addresses the use of the Frank-Wolfe algorithm for a particularly critical constrained optimization problem in Deep Learning, which is the
+problem of Adversarial Attacks. The objective of an adversarial attack is to find a small enough perturbation of the input able to make the neural network
+output the wrong prediction, while adhering to constraints inside of the convex set C. In our case, we use MNIST, so the goal is to find a non-trivial perturbation of the 28x28 black and white image of a hand-written
+digit. Moreover, as we will see later, we employ a zeroth-order variant of the Frank-Wolfe algorithm, since
+we don't have access to the full exact gradient.
 
 
 \subsection{Deterministic Frank-Wolfe Algorithm}
 
+In case first-order information is available in an optimization task, the deterministic version of the Frank-Wolfe algorithm
+can be a good choice.
+
+When full, exact first-order information is available through an incremental first-order oracle (IFO),
+the Frank-Wolfe algorithm is basically described by the following two formulas:
+
+\[
+\begin{aligned}
+v_{t} & =\arg \min _{v \in \mathcal{C}}\left\langle h, \nabla f\left(x_{t}\right)\right\rangle \\
+x_{t+1} & =\left(1-\gamma_{t+1}\right) x_{t}+\gamma_{t+1} v_{t},
+\end{aligned}
+\]
+
+where 
+
+\begin{itemize}
+
+   \item $f\left(x_{t}\right)$ is the objective function we need to minimize;
+
+   \item $\mathcal{C}$ is the convex set;
+
+   \item $\langle\cdot, \cdot\rangle$ is the inner/dot product;
+
+   \item $v_{t}$ is the direction we need to take in order to minimize the linear approximation;
+
+   \item $x_{t}$ is the current iteration result;
+
+   \item $h$ is a vector in the same space as $x_{t}$;
+
+   \item $\gamma_{t+1}=\frac{2}{t+2}$ is the step size.
+
+\end{itemize}
 
 
 
-
-
-
-
-%------------------------------------------------------------------------
-\section{Formatting your paper}
-
-All text must be in a two-column format. The total allowable width of the
-text area is $6\frac78$ inches (17.5 cm) wide by $8\frac78$ inches (22.54
-cm) high. Columns are to be $3\frac14$ inches (8.25 cm) wide, with a
-$\frac{5}{16}$ inch (0.8 cm) space between them. The main title (on the
-first page) should begin 1.0 inch (2.54 cm) from the top edge of the
-page. The second and following pages should begin 1.0 inch (2.54 cm) from
-the top edge. On all pages, the bottom margin should be 1-1/8 inches (2.86
-cm) from the bottom edge of the page for $8.5 \times 11$-inch paper; for A4
-paper, approximately 1-5/8 inches (4.13 cm) from the bottom edge of the
-page.
-
-%-------------------------------------------------------------------------
-\subsection{Margins and page numbering}
-
-All printed material, including text, illustrations, and charts, must be kept
-within a print area 6-7/8 inches (17.5 cm) wide by 8-7/8 inches (22.54 cm)
-high.
-Page numbers should be in footer with page numbers, centered and .75
-inches from the bottom of the page and make it start at the correct page
-number rather than the 4321 in the example.  To do this fine the line (around
-line 23)
-\begin{verbatim}
-%\ifcvprfinal\pagestyle{empty}\fi
-\setcounter{page}{4321}
-\end{verbatim}
-where the number 4321 is your assigned starting page.
-
-Make sure the first page is numbered by commenting out the first page being
-empty on line 46
-\begin{verbatim}
-%\thispagestyle{empty}
-\end{verbatim}
-
-
-%-------------------------------------------------------------------------
-\subsection{Type-style and fonts}
-
-Wherever Times is specified, Times Roman may also be used. If neither is
-available on your word processor, please use the font closest in
-appearance to Times to which you have access.
-
-MAIN TITLE. Center the title 1-3/8 inches (3.49 cm) from the top edge of
-the first page. The title should be in Times 14-point, boldface type.
-Capitalize the first letter of nouns, pronouns, verbs, adjectives, and
-adverbs; do not capitalize articles, coordinate conjunctions, or
-prepositions (unless the title begins with such a word). Leave two blank
-lines after the title.
-
-AUTHOR NAME(s) and AFFILIATION(s) are to be centered beneath the title
-and printed in Times 12-point, non-boldface type. This information is to
-be followed by two blank lines.
-
-The ABSTRACT and MAIN TEXT are to be in a two-column format.
-
-MAIN TEXT. Type main text in 10-point Times, single-spaced. Do NOT use
-double-spacing. All paragraphs should be indented 1 pica (approx. 1/6
-inch or 0.422 cm). Make sure your text is fully justified---that is,
-flush left and flush right. Please do not place any additional blank
-lines between paragraphs.
-
-Figure and table captions should be 9-point Roman type as in
-Table~\ref{mytable}. Short captions should be centred.
-
-\noindent Callouts should be 9-point Helvetica, non-boldface type.
-Initially capitalize only the first word of section titles and first-,
-second-, and third-order headings.
-
-FIRST-ORDER HEADINGS. (For example, {\large \bf 1. Introduction})
-should be Times 12-point boldface, initially capitalized, flush left,
-with one blank line before, and one blank line after.
-
-SECOND-ORDER HEADINGS. (For example, { \bf 1.1. Database elements})
-should be Times 11-point boldface, initially capitalized, flush left,
-with one blank line before, and one after. If you require a third-order
-heading (we discourage it), use 10-point Times, boldface, initially
-capitalized, flush left, preceded by one blank line, followed by a period
-and your text on the same line.
-
-%-------------------------------------------------------------------------
-\subsection{Footnotes}
-
-Please use footnotes\footnote {This is what a footnote looks like.  It
-often distracts the reader from the main flow of the argument.} sparingly.
-Indeed, try to avoid footnotes altogether and include necessary peripheral
-observations in
-the text (within parentheses, if you prefer, as in this sentence).  If you
-wish to use a footnote, place it at the bottom of the column on the page on
-which it is referenced. Use Times 8-point type, single-spaced.
-
-
-%-------------------------------------------------------------------------
-\subsection{References}
+\section{References}
 
 List and number all bibliographical references in 9-point Times,
 single-spaced, at the end of your paper. When referenced in the text,
