@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.8.6)  6 JAN 2024 11:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.2) (preloaded format=pdflatex 2022.8.6)  8 JAN 2024 12:06
 entering extended mode
 **"c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex"
 (c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex
@@ -315,27 +315,40 @@ LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 42
  (F:\Programmi\MikTeX\tex/latex/psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 117.
+Underfull \hbox (badness 1275) in paragraph at lines 103--105
+[]\OT1/ptm/m/n/10 The ex-act min-i-miza-tion in the first for-mula in the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--105
+
+ []
+
+[1{C:/Users/marco/AppData/Local/MiKTeX/pdftex/config/pdftex.map}
+
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 120.
  (F:\Programmi\MikTeX\tex/latex/psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [1{C:/Users/marco/AppData/Local/MiKTeX/pdftex/config/pdftex.map}
+)
+Underfull \hbox (badness 10000) in paragraph at lines 138--140
 
+ []
 
-] (egpaper_final.bbl) [2
-
-] (egpaper_final.aux) ) 
+(egpaper_final.bbl) [2] (egpaper_final.aux) ) 
 Here is how much of TeX's memory you used:
- 9235 strings out of 479334
- 132656 string characters out of 2868885
- 437682 words of memory out of 3000000
- 26527 multiletter control sequences out of 15000+200000
- 425422 words of font info for 77 fonts, out of 3000000 for 9000
+ 9244 strings out of 479334
+ 132759 string characters out of 2868885
+ 442638 words of memory out of 3000000
+ 26529 multiletter control sequences out of 15000+200000
+ 427975 words of font info for 82 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 83i,9n,88p,395b,392s stack positions out of 5000i,500n,10000p,200000b,50000s
-{F:/Programmi/MikTeX/fonts/enc/dvips/base/8r.enc}<F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><F:/Programmi/MikTeX/fonts/type1/urw/courier/ucrr8a.pfb><F:/Programmi/MikTeX/fonts/type1/urw/times/utmb8a.pfb><F:/Programmi/MikTeX/fonts/type1/urw/times/utmr8a.pfb><F:/Programmi/MikTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on egpaper_final.pdf (2 pages, 136856 bytes).
+ 83i,9n,88p,395b,359s stack positions out of 5000i,500n,10000p,200000b,50000s
+{F:/Programmi/MikTeX/fonts/enc/dvips/base/8r.enc}<F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><F:/Programmi/MikTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><F:/Programmi/MikTeX/fonts/type1/urw/courier/ucrr8a.pfb><F:/Programmi/MikTeX/fonts/type1/urw/times/utmb8a.pfb><F:/Programmi/MikTeX/fonts/type1/urw/times/utmr8a.pfb><F:/Programmi/MikTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on egpaper_final.pdf (2 pages, 151013 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
- 10 named destinations out of 1000 (max. 500000)
+ 82 PDF objects out of 1000 (max. 8388607)
+ 13 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

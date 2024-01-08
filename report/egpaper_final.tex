@@ -98,7 +98,10 @@ we don't have access to the full exact gradient.
 \subsection{Deterministic Frank-Wolfe Algorithm}
 
 In case first-order information is available in an optimization task, the deterministic version of the Frank-Wolfe algorithm
-can be a good choice.
+can be a good choice, expecially when exact minimization is computationally expensive.
+
+The exact minimization in the first formula in the introduction is approximated through an inexact minimization,
+where a vector v satisfies some conditions, while maintaining the same convergence rate. \\
 
 When full, exact first-order information is available through an incremental first-order oracle (IFO),
 the Frank-Wolfe algorithm is basically described by the following two formulas:
@@ -130,7 +133,66 @@ where
 
 \end{itemize}
 
+\subsection{Stochastic Frank-Wolfe Algorithm}
 
+In case first-order information is not available, and we can only work with zeroth-order information,
+the stochastic variant of the Frank-Wolfe algorithm can be a good choice. \\
+
+By employing a Stochastic Zeroth-order Oracle (SZO), the deterministic objective function is substituted by a 
+stochastic objective function $f\left(x_{t}, y_{t}\right)$, with  $y_{t}$ being a random variable.
+Therefore, the Stochastic Frank-Wolfe algorithm becomes:
+
+\[
+\begin{aligned}
+v_{t} & =\arg \min _{v \in \mathcal{C}}\left\langle h, \nabla f\left(x_{t}, y_{t}\right)\right\rangle \\
+x_{t+1} & =\left(1-\gamma_{t+1}\right) x_{t}+\gamma_{t+1} v_{t},
+\end{aligned}
+\]
+
+\subsection{Zeroth-Order Gradient Estimation}
+
+When the gradient of a function is unavailable, it is possible to estimate it using function evaluations,
+by calculating the function values at selected points. More in detail, we can use the difference of the
+function value with respect to two random points to estimate the gradient. In our case, we employ the use of
+the coordinate-wise gradient estimator, as in the Gao et al. paper.
+
+The coordinate-wise gradient estimator is defined as follows:
+
+\[
+\hat{\nabla} f(\mathbf{x})=\sum_{j=1}^{d} \frac{f\left(\mathbf{x}+\mu_{j} \mathbf{e}_{j}\right)-f\left(\mathbf{x}-\mu_{j} \mathbf{e}_{j}\right)}{2 \mu_{j}} \mathbf{e}_{j}
+\]
+
+where
+
+\begin{itemize}
+
+
+
+\item $\hat{\nabla} f(\mathbf{x})$ is the estimated gradient of the function $f$ in $\mathbf{x}$
+
+\item $d$ is the dimensionality of the optimization space
+
+\item $\mu_{j}>0$ is a smoothing parameter
+
+\item $\mathbf{e}_{j} \in \mathbb{R}^{d}$ is the basis vector where only the j-th element is 1 and all others are 0.
+
+\end{itemize}
+
+\section{Implemented Algorithms}
+
+This project involves the implementation of the following algorithms:
+
+\begin{itemize}
+   \item \textbf{FZCGS}: Faster Zeroth-Order Conditional Gradient Method
+   \item \textbf{SGFFW}: Stochastic Gradient-Free Frank-Wolfe with the following gradient approximation schemes:
+      \begin{itemize}
+         \item \textbf{KWSA}: Kiefer-Wolfowitz stochastic approximation
+         \item \textbf{RDSA}: random directions stochastic approximation
+         \item \textbf{I-RDSA}: improvised random directions stochastic approximation
+      \end{itemize}
+\end{itemize}
+
+\subsection{FZCGS: Faster Zeroth-Order Conditional Gradient Method}
 
 \section{References}
 
@@ -140,21 +202,7 @@ enclose the citation number in square brackets, for
 example~\cite{Authors14}.  Where appropriate, include the name(s) of
 editors of referenced books.
 
-\begin{table}
-\begin{center}
-\begin{tabular}{|l|c|}
-\hline
-Method & Frobnability \\
-\hline\hline
-Theirs & Frumpy \\
-Yours & Frobbly \\
-Ours & Makes one's heart Frob\\
-\hline
-\end{tabular}
-\end{center}
-\caption{Results. Ours is better.}
-\label{mytable}
-\end{table}
+
 
 %-------------------------------------------------------------------------
 \subsection{Illustrations, graphs, and photographs}
