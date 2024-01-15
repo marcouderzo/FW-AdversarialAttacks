@@ -28,7 +28,7 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
 
 
 
-def FZCGS(x_0, N, q, K, L, obj_func, MGR) -> np.NDArray:
+def FZCGS(x_0, N, q, K, L, obj_func, MGR):
 
     best_Loss = 1e10
     best_delImgAT = x_0  # at the end, x_k will be -> best_delImgAT

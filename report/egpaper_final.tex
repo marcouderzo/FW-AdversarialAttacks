@@ -183,7 +183,7 @@ where
 This project involves the implementation of the following algorithms:
 
 \begin{itemize}
-   \item \textbf{FZCGS}: Faster Zeroth-Order Conditional Gradient Method
+   \item \textbf{FZCGS}: Faster Zeroth-Order Conditional Gradient Sliding Method
    \item \textbf{SGFFW}: Stochastic Gradient-Free Frank-Wolfe with the following gradient approximation schemes:
       \begin{itemize}
          \item \textbf{KWSA}: Kiefer-Wolfowitz stochastic approximation
@@ -192,7 +192,43 @@ This project involves the implementation of the following algorithms:
       \end{itemize}
 \end{itemize}
 
-\subsection{FZCGS: Faster Zeroth-Order Conditional Gradient Method}
+\subsection{FZCGS: Faster Zeroth-Order Conditional Gradient Sliding Method}
+
+Gao et al. proposes a novel algorithm to optimize the following constrained finite-sum minimization problem:
+
+\[
+\min _{x \in \Omega} F(x)=\frac{1}{n} \sum_{i=1}^{n} f_{i}(x)
+\]
+
+where
+
+\begin{itemize}
+
+\item $\Omega \subset \mathbb{R}^{d}$ is the closed convex feasible set
+\item $f_{i}(x)$ are the various $n$ component functions, which are smooth and non-convex
+\end{itemize}
+
+%With FZCGS using a Function Query Oracle (FQO), the authors of the paper achieved a  
+%$O\left(\frac{n^{1 / 2} d}{\epsilon^{2}}\right)$ oracle complexity.
+
+FZCGS incorporates an acceleration technique from the non-convex Frank-Wolfe method. (?)
+It uses gradient estimation and Conditional Gradient Sliding to perform the updates.
+The convergence rate depends on the choice of the parameters. The pseudocode of the algorithm is presented below.
+
+\includegraphics*[scale=0.7]{img/fzcgs_pseudocode.jpg} \\
+
+\includegraphics*[scale=0.7]{img/condg_pseudocode.jpg} \\
+
+
+The results of FZCGS from the paper are:
+
+\begin{itemize}
+   \item When choosing the right set of parameters for FZCGS, the expected squared norm of the gradient estimation error converges as per the given rate
+   \item The amortized function queries oracle complexity is $O\left(\frac{n^{1 / 2} d}{\epsilon}\right)$.
+   \item The linear oracle complexity is $O\left(\frac{1}{\epsilon^{2}}\right)$.
+\end{itemize}
+
+
 
 \section{References}
 

@@ -23,58 +23,6 @@ import Utils as util
 np.random.seed(2018)
 
 
-class ADV_OBJ_FUNC:
-        def __init__(self, origImgs, delta, nFunc, model):
-                self.origImgs = origImgs
-                self.delta = delta
-                self.nFunc = nFunc
-                self.model = model
-
-
-        def adv_single_f(self, x_img, delta, model):
-                print(x_img.shape)
-                x_img = x_img + delta
-                print(x_img.shape)
-                f_yi_raw = model.predict(x_img) # (todo: before softmax?: gets the prediction) 
-                return f_yi_raw
-
-        def adv_find_second_max_f(self, f_yi_raw):
-                f_j_raw = np.delete(f_yi_raw, np.argmax(f_yi_raw))
-                f_j = np.max(f_j_raw)
-                return f_j
-
-
-        def adv_objective_function(self, origImgs, delta, nFunc):
-
-                """
-                Based on the Gao et al. paper, section 4.3. Not sure if the implementation is correct.
-                We evaluate the i-th image's component function y_i with the original image + a perturbation delta
-                and get the best prediction. (This should be done BEFORE the softmax so idk if this is right).
-                Then from that we get the max value of the raw evaluation but with constraint j != y_i, so this
-                should be the second best prediction (or the first if we remove the best one from the array).
-                Then we compute the max of the difference between the two predictions and 0.
-                We finally iterate through all images (equal to the number of component functions) computing the 
-                summation and averaging by the number of nFunc.
-                """
-
-                summation= float()
-
-                for idx_imgID in range(nFunc):
-
-                        f_yi_raw = self.adv_single_f(origImgs[idx_imgID], delta, self.model)
-                        f_yi = np.max(f_yi_raw)
-
-                        f_j = self.adv_find_second_max_f(f_yi_raw)
-                        partial_out_max = np.max([f_yi - f_j, 0])
-
-                        summation = summation + partial_out_max
-
-                loss = (1/nFunc) * summation
-                return loss
-
-
-#### ORIGINAL
-
 class OBJFUNC:
 
     def __init__(self, MGR, model, origImgs, origLabels):
@@ -107,7 +55,7 @@ class OBJFUNC:
         sample = np.random.normal(0.0, 1.0, size=self.origImgs[0].shape)
         return sample/np.linalg.norm(sample.flatten())
 
-    def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
+#    def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
 
         if( randBatchIdx.size == 0 ):
             randBatchIdx = np.arange(0, self.nFunc)
@@ -127,6 +75,33 @@ class OBJFUNC:
         self.Loss_Attack = np.amax(np.maximum(0.0, -np.log(Score_NonTargetLab) + np.log(Score_TargetLab) ) )
         self.Loss_L2 = self.imageSize * np.mean(np.square(advImgs-self.origImgs)/2.0)
         self.Loss_Overall = self.Loss_L2 + self.const*self.Loss_Attack
+
+        return self.Loss_Overall
+
+    def evaluate(self, delImgAT, randBatchIdx, s=1, addQueryCount=True):
+        if randBatchIdx.size == 0:
+            randBatchIdx = np.arange(0, self.nFunc)
+        batchSize = randBatchIdx.size
+
+        origLabels_Batched = self.origLabels[randBatchIdx]
+        delImgsAT = np.repeat(np.expand_dims(delImgAT, axis=0), self.nFunc, axis=0)
+        #delImgsAT = s * np.tanh(delImgsAT / s) # Ensure ||delImgsAT||_inf <= s with a differentiable function for clipping
+        advImgs = np.tanh(self.origImgsAT + delImgsAT) / 2.0
+        advImgs_Batched = advImgs[randBatchIdx]
+
+        if addQueryCount:
+            self.query_count += batchSize
+
+        Score_AdvImgs_Batched = self.model.model.predict(advImgs_Batched)
+        Score_TargetLab = np.maximum(1e-20, np.sum(origLabels_Batched * Score_AdvImgs_Batched, 1))
+        Score_NonTargetLab = np.maximum(1e-20, np.amax((1 - origLabels_Batched) * Score_AdvImgs_Batched - (origLabels_Batched * 10000), 1))
+        
+        # Use Score_TargetLab and Score_NonTargetLab in the calculation of Loss_Attack
+        Loss_Attack = np.amax(np.maximum(0.0, -np.log(Score_NonTargetLab) + np.log(Score_TargetLab)))
+
+        self.Loss_L2 = self.imageSize * np.mean(np.square(advImgs - self.origImgs) / 2.0)
+        self.Loss_Attack = Loss_Attack
+        self.Loss_Overall = self.Loss_L2 + self.const * self.Loss_Attack
 
         return self.Loss_Overall
 
