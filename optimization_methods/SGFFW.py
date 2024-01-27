@@ -1,9 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 np.random.seed(2023)
 
 def SGFFW(x_0, N, m, obj_func, grad_approx_scheme, MGR):
+    t_start = time.time()
+
     best_Loss = 1e10
     best_delImgAT = x_0  #x_t perturbation will be saved in best_delImgAT
     d = x_0.shape[0]*x_0.shape[1] # number of iterations is sizes of x_0 multiplied.
@@ -90,23 +93,27 @@ def SGFFW(x_0, N, m, obj_func, grad_approx_scheme, MGR):
         MGR.logHandler.write(' Loss_Distortion: ' + str(obj_func.Loss_L2))
         MGR.logHandler.write(' Loss_Attack: ' + str(obj_func.Loss_Attack))
         MGR.logHandler.write(' Current_Best_Distortion: ' + str(best_Loss))
+        MGR.logHandler.write(' CurrentTime: ' + str(time.time()-t_start))
         MGR.logHandler.write('\n')
 
 
     print("Final Perturbation x_t: ", x_t[:,:,0])
 
-    #### Loss Plot #####################################################################
-    plt.plot(range(len(loss_values)), loss_values, label='Loss_Overall')
-    plt.plot(range(len(loss_l2_values)), loss_l2_values, label='Loss_L2')
-    plt.plot(range(len(loss_attack_values)), loss_attack_values, label='Loss_Attack')
-    plt.xlabel('Iteration Index')
-    plt.ylabel('Loss Values')
-    plt.title('Losses Over Iterations')
-    plt.legend()
-    plt.savefig('Results/SGFFW/SGFFW_Losses.png')
-    plt.show()
-    
-    #####################################################################################
+    ##### Loss Plot #####################################################################
+
+    # All plots moved to separate .ipynb notebook loading data from log.txt
+
+    #plt.plot(range(len(loss_values)), loss_values, label='Loss_Overall')
+    #plt.plot(range(len(loss_l2_values)), loss_l2_values, label='Loss_L2')
+    #plt.plot(range(len(loss_attack_values)), loss_attack_values, label='Loss_Attack')
+    #plt.xlabel('Iteration Index')
+    #plt.ylabel('Loss Values')
+    #plt.title('Losses Over Iterations')
+    #plt.legend()
+    #plt.savefig('Results/SGFFW/SGFFW_Losses.png')
+    #plt.show()
+    #
+    ######################################################################################
 
     return best_delImgAT
 

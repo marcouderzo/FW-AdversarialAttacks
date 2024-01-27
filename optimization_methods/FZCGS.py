@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 np.random.seed(2023)
 
@@ -29,7 +30,7 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
 
 
 def FZCGS(x_0, N, q, K, L, obj_func, MGR):
-
+    t_start = time.time()
     best_Loss = 1e10
     best_delImgAT = x_0  # at the end, x_k will be -> best_delImgAT
 
@@ -140,20 +141,24 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
         MGR.logHandler.write(' Loss_Distortion: ' + str(obj_func.Loss_L2))
         MGR.logHandler.write(' Loss_Attack: ' + str(obj_func.Loss_Attack))
         MGR.logHandler.write(' Current_Best_Distortion: ' + str(best_Loss))
+        MGR.logHandler.write(' CurrentTime: ' + str(time.time()-t_start))
         MGR.logHandler.write('\n')
     print("Final Perturbation x_k: ", x_k[:,:,0])
 
-    #### Loss Plot #####################################################################
-    plt.plot(range(len(loss_values)), loss_values, label='Loss_Overall')
-    plt.plot(range(len(loss_l2_values)), loss_l2_values, label='Loss_L2')
-    plt.plot(range(len(loss_attack_values)), loss_attack_values, label='Loss_Attack')
-    plt.xlabel('Iteration Index')
-    plt.ylabel('Loss Values')
-    plt.title('Losses Over Iterations')
-    plt.legend()
-    plt.savefig('Results/FZCGS/FZCGS_Losses.png')
-    plt.show()
-    
-    #####################################################################################
+    ##### Loss Plot #####################################################################
+
+    # All plots moved to separate .ipynb notebook loading data from log.txt
+
+    #plt.plot(range(len(loss_values)), loss_values, label='Loss_Overall')
+    #plt.plot(range(len(loss_l2_values)), loss_l2_values, label='Loss_L2')
+    #plt.plot(range(len(loss_attack_values)), loss_attack_values, label='Loss_Attack')
+    #plt.xlabel('Iteration Index')
+    #plt.ylabel('Loss Values')
+    #plt.title('Losses Over Iterations')
+    #plt.legend()
+    #plt.savefig('Results/FZCGS/FZCGS_Losses.png')
+    #plt.show()
+    #
+    ######################################################################################
 
     return best_delImgAT

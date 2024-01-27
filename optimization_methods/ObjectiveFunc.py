@@ -55,7 +55,7 @@ class OBJFUNC:
         sample = np.random.normal(0.0, 1.0, size=self.origImgs[0].shape)
         return sample/np.linalg.norm(sample.flatten())
 
-#    def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
+    def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
 
         if( randBatchIdx.size == 0 ):
             randBatchIdx = np.arange(0, self.nFunc)
@@ -78,7 +78,7 @@ class OBJFUNC:
 
         return self.Loss_Overall
 
-    def evaluate(self, delImgAT, randBatchIdx, s=1, addQueryCount=True):
+    #def evaluate(self, delImgAT, randBatchIdx, s=1, addQueryCount=True):
         if randBatchIdx.size == 0:
             randBatchIdx = np.arange(0, self.nFunc)
         batchSize = randBatchIdx.size

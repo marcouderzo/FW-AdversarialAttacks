@@ -228,6 +228,62 @@ The results of FZCGS from the paper are:
    \item The linear oracle complexity is $O\left(\frac{1}{\epsilon^{2}}\right)$.
 \end{itemize}
 
+In the paper, the experimental results demonstate the superiority of FZCGS over baseline methods
+in terms of onvergence speed and performance, also thanks to the acceleration technique that this algorithm employs.
+
+\subsection{Stochastic Gradient-Free Frank-Wolfe Algorithm}
+
+Sahu et al. propose a stochastic zeroth-order Frank-Wolfe algorithm for the following stochastic
+optimization problem, particularly significant in deep learning:
+
+\[
+\min _{x \in C} f(x)=\min _{x \in C} \mathbb{E}_{y}[F(x ; y)]
+\]
+
+where $C \in \mathbb{R}^{d}$ is a closed convex set.
+
+To solve this kind of problem, one can employ projection and projection-free methods.
+SGFFW uses a zeroth-order oracle while focusing on a projection-free stochastic variant
+of Frank-Wolfe. It uses gradient approximation schemes and addresses challenges such as non-smoothness
+and variance. Using an averaging trick to ensure the stability of the algorithm,
+the updates are the following:
+
+\[
+\begin{aligned}
+d_{t} & =\left(1-\rho_{t}\right) d_{t-1}+\rho_{t} g\left(x_{t}, y_{t}\right) \\
+v_{t} & =\arg \min _{s \in C}\left\langle s, d_{t}\right\rangle \\
+x_{t+1} & =\left(1-\gamma_{t+1}\right) x_{t}+\gamma_{t+1} v_{t}
+\end{aligned}
+\]
+
+Employing a gradient approximation techniques or another influences the 
+algorithm's dimension dependence and the computational cost, also in terms of query number and time.
+
+\begin{itemize}
+   \item {Kiefer-Wolfowitz Stochastic Approximation (KWSA):
+   \[
+   \mathbf{g}\left(\mathbf{x}_{t} ; \mathbf{y}\right)=\sum_{i=1}^{d} \frac{F\left(\mathbf{x}_{t}+c_{t} \mathbf{e}_{i} ; \mathbf{y}\right)-F\left(\mathbf{x}_{t} ; \mathbf{y}\right)}{c_{t}} \mathbf{e}_{i}
+   \]}
+   \item {Random Direction Stochastic Approximation (RDSA): \newline
+   \text{Sample} $\mathbf{z}_{t} \sim \mathcal{N}\left(0, \mathbf{I}_{d}\right)$,
+   \[
+   \mathbf{g}\left(\mathbf{x}_{t} ; \mathbf{y}, \mathbf{z}_{t}\right)=\frac{F\left(\mathbf{x}_{t}+c_{t} \mathbf{z}_{t} ; \mathbf{y}\right)-F\left(\mathbf{x}_{t} ; \mathbf{y}\right)}{c_{t}} \mathbf{z}_{t}
+   \]}
+
+   \item {Improvised Random Direction Stochastic Approximation (I-RDSA): \newline
+   \text {Sample}$\left\{\mathbf{z}_{i, t}\right\}_{i=1}^{m} \sim \mathcal{N}\left(0, \mathbf{I}_{d}\right)$ \newline
+   \[
+      \mathbf{g}\left(\mathbf{x}_{t} ; \mathbf{y}, \mathbf{z}_{t}\right)=\frac{1}{m} \sum_{i=1}^{m} \frac{F\left(\mathbf{x}_{t}+c_{t} \mathbf{z}_{i, t} ; \mathbf{y}\right)-F\left(\mathbf{x}_{t} ; \mathbf{y}\right)}{c_{t}} \mathbf{z}_{i, t}
+   \]}
+\end{itemize} \\
+
+Below, the pseudocode of the algorithm is presented: \\
+
+\begin{center}
+   \includegraphics*[scale=0.75]{img/sgffw_pseudocode.png}
+\end{center}
+
+
 
 
 \section{References}
