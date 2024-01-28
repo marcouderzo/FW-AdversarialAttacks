@@ -27,7 +27,7 @@ sys.path.append('optimization_methods/')
 
 import os
 import numpy as np
-#from keras.utils import np_utils
+from keras.utils import to_categorical
 import argparse
 
 from setup_mnist import MNIST, MNISTModel
@@ -42,7 +42,6 @@ MGR = SYS_MANAGER()
 
 
 def main():
-
     data, model =  MNIST(), MNISTModel(restore="models/mnist", use_log=True)
     origImgs, origLabels, origImgID = util.generate_attack_data_set(data, model, MGR)
     delImgAT_Init = np.zeros(origImgs[0].shape)
@@ -107,7 +106,10 @@ if __name__ == "__main__":
 
     args = vars(parser.parse_args())
 
-    MGR.Add_Parameter('save_path', 'Results/' + args['optimizer'])
+    if args['optimizer'] == 'FZCGS':
+        MGR.Add_Parameter('save_path', 'Results/' + args['optimizer'])
+    else:
+        MGR.Add_Parameter('save_path', 'Results/' + args['optimizer'] + '/' + args['grad_approx_scheme'])
 
     for par in args:
         MGR.Add_Parameter(par, args[par])

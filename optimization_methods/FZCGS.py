@@ -11,12 +11,14 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
     alpha_t=1
 
     while(True):
+        if t%10 == 0:
+            print(t)
         u_expanded = np.repeat(np.expand_dims(u_t,axis=1),OMEGA.shape[1],axis=1)
         v_i = np.argmax(np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA+u_expanded))
         v = OMEGA[:,v_i]
         dot = np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA[:,v_i]+u_t)
 
-        if dot <= eta or t==10000000:
+        if dot <= eta or alpha_t < 0.00001 or t==10000:
             return u_t.reshape(u_0.shape) 
         
         a_dot = np.dot((1/gamma)*(u_t - u_0.reshape(-1)) - g_t , v-u_t ) # to check if (u_t - u_0.reshape(-1)) is correct.
@@ -30,6 +32,7 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
 
 
 def FZCGS(x_0, N, q, K, L, obj_func, MGR):
+    print("BRO")
     t_start = time.time()
     best_Loss = 1e10
     best_delImgAT = x_0  # at the end, x_k will be -> best_delImgAT
@@ -56,7 +59,7 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
     x_k = x_0.copy()
     
 
-
+    print("fuckface")
     ### FEASIBLE SET ### 
 
     # This feasible set contains all possible directions in which sum of elements 
@@ -81,9 +84,9 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
     loss_attack_values = []
 
     # The code is using the original obj_func from the git repo. We need to implement the adversarial obj_func from the Gao et al. paper
-
+    print("before iterating")
     for k in range(N): # iterations, change to N
-
+        print("another iteration ffs")
         if np.mod(k, q) == 0: 
             S1_batch_idx = np.random.choice(np.arange(0, MGR.parSet['nFunc']), n, replace = False) 
             v_k = np.zeros(x_k.shape)
@@ -110,7 +113,7 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
                             )
                 #if np.mod(k, 100) == 0:
                 #    print(v_k)
-
+                print("diocan")
             v_k = (1/q_val)*(1/(2*mu))*(v_k/q)+v_prev
             
         
@@ -120,9 +123,9 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
         x_k = condg(v_k, x_k, gamma, eta, OMEGA)
         #print("New Perturbation x_k:", x_k[:,:,0])
 
-
+        print("eheheh")
         obj_func.evaluate(x_k, np.array([]), False)
-
+        print("porcoddio")
         print('Iteration Index: ', k)
         obj_func.print_current_loss()
         
