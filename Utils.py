@@ -21,6 +21,7 @@
 
 from PIL import Image
 
+from keras.models import Model, model_from_json, Sequential
 import os
 import numpy as np
 
