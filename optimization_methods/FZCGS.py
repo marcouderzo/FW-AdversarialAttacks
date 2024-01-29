@@ -11,14 +11,13 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
     alpha_t=1
 
     while(True):
-        if t%10 == 0:
-            print(t)
+        print(t)
         u_expanded = np.repeat(np.expand_dims(u_t,axis=1),OMEGA.shape[1],axis=1)
         v_i = np.argmax(np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA+u_expanded))
         v = OMEGA[:,v_i]
         dot = np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA[:,v_i]+u_t)
 
-        if dot <= eta or alpha_t < 0.00001 or t==10000:
+        if dot <= eta or alpha_t < 0.00001 or t==100000:
             return u_t.reshape(u_0.shape) 
         
         a_dot = np.dot((1/gamma)*(u_t - u_0.reshape(-1)) - g_t , v-u_t )

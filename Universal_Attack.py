@@ -86,7 +86,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     ##### GENERAL PARAMETERS #####
-    parser.add_argument('-optimizer', default='SGFFW', help="choose from FZCGS and SGFFW")
+    parser.add_argument('-optimizer', default='FZCGS', help="choose from FZCGS and SGFFW")
     parser.add_argument('-nFunc', type=int, default=10, help="Number of images being attacked at once")
     parser.add_argument('-target_label', type=int, default=4, help="The target digit to attack")
     parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
