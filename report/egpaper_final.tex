@@ -283,6 +283,161 @@ Below, the pseudocode of the algorithm is presented: \\
    \includegraphics*[scale=0.75]{img/sgffw_pseudocode.png}
 \end{center}
 
+\subsubsection{Primal Gap}
+
+Sahu et al. state the main results involving the different gradient 
+approximation schemes for the primal (sub-optimality) gap, which provide a characterization of
+\[E\left[f\left(x_{t}\right)-f\left(x^{*}\right)\right]\].
+
+Given the sequence $\gamma_{t}= \frac{2}{t+8}$:
+
+\begin{itemize}
+   \item{RDSA gradient approximation scheme:
+
+         \[
+         E\left[f\left(x_{t}\right)-f\left(x^{*}\right)\right]=O\left(d^{1 / 3}(t+9)^{1 / 3}\right)
+         \]
+   }
+
+   \item{I-RDSA gradient approximation scheme:
+         \[
+         E\left[f\left(x_{t}\right)-f\left(x^{*}\right)\right]=O\left(\frac{d}{m^{1 / 3}}(t+9)^{1 / 3}\right)
+         \]
+   }
+
+   \item{KWSA gradient approximation scheme:
+         \[
+         E\left[f\left(x_{t}\right)-f\left(x^{*}\right)\right]=O\left(\frac{1}{(t+9)^{1 / 3}}\right)
+         \]
+   }
+\end{itemize}
+
+
+The dimension dependence of the primal gap is quantified to be
+$d^{1 / 3}$. At the same time, the dependence on iterations
+$O\left(T^{-1 / 3}\right)$, matches that of the stochastic 
+Frank-Wolfe which has asccess to first-order information. 
+The improvement of the rates for I-RDSA and KWSA are at the cost of
+extra directional derivatives at each iteration.
+The number of queries to the SZO to obtain a primal gap of $\epsilon$ is given by 
+$O\left(\frac{d}{\epsilon^{3}}\right)$, where the dimension dependence
+is consistent with zeroth-order schemes and cannot be improved on.
+
+\subsubsection{Dual Gap}
+
+The paper also quantifies the dual gap with the same gradient approximation schemes
+
+\begin{itemize}
+\item {RDSA gradient approximation scheme:
+
+\[
+\begin{aligned}
+E\left[\min _{t=0, \ldots, T-1} G\left(x_{t}\right)\right] \leq & \frac{7\left(F\left(x_{0}\right)-F\left(x^{*}\right)\right)}{2 T} \\
+& +\frac{L R^{2} \ln (T+7)}{T} \\
+& +\frac{Q_{0}+R \sqrt{2 Q}}{2 T^{2 / 3}}
+\end{aligned}
+\]
+}
+
+\item {I-RDSA gradient approximation scheme:
+
+\[
+\begin{aligned}
+E\left[\min _{t=0, \ldots, T-1} G\left(x_{t}\right)\right] \leq & \frac{7\left(F\left(x_{0}\right)-F\left(x^{*}\right)\right)}{2 T} \\
+& +\frac{L R^{2} \ln (T+7)}{T} \\
+& +\frac{Q_{i r}+R \sqrt{2 Q_{i r}}}{2 T^{2 / 3}}
+\end{aligned}
+\]
+}
+
+\item {KWSA gradient approximation scheme:
+
+\[
+\begin{aligned}
+E\left[\min _{t=0, \ldots, T-1} G\left(x_{t}\right)\right] \leq & \frac{7\left(F\left(x_{0}\right)-F\left(x^{*}\right)\right)}{2 T} \\
+& +\frac{L R^{2} \ln (T+7)}{T} \\
+& +\frac{Q_{k w}+R \sqrt{2 Q_{k w}}}{2 T^{2 / 3}}
+\end{aligned}
+\]
+}
+
+\end{itemize}
+
+
+The dimension dependence of the Frank-Wolfe duality gap is quantified to be $d^{1 / 3}$.
+At the same time, the dependence on iterations, $O\left(T^{-1 / 3}\right)$, matches
+that of the primal gap and hence follows that the number of queries to the SZO to obtain a Frank-Wolfe 
+duality gap of $\epsilon$ is given by $O\left(\frac{d}{\epsilon^{3}}\right)$. 
+In particular, it is also asserted that the initial conditions 
+are forgotten as $O(1 / T)$.
+
+The algorithm's effectiveness is demonstrated in blackbox 
+optimization scenarios, specifically in optimizing complex 
+forward models from physics without analytical expressions. 
+The proposed algorithm converges to a first-order stationary 
+point, showcasing its applicability in challenging black-box 
+optimization problems.
+
+The paper introduces a stochastic zeroth order FrankWolfe 
+algorithm suitable for non-smooth optimization problems. 
+The algorithm's reliance on hard-toestimate parameters is
+minimal, making it practical for real-world applications. 
+Convergence rates for the primal gap and Frank-Wolfe duality 
+gap are quantified, highlighting its efficiency. 
+Experimental results on various datasets further support its efficacy.
+
+
+\section{Frank-Wolfe for Adversarial Attacks on MNIST}
+
+\subsection{Adversarial Attacks}
+
+An Adversarial Attacks is a deliberate manipulation of input data with the 
+intention of causing a machine learning model to make a mistake or produce 
+incorrect outputs. The goal of an adversarial attack is to perturb 
+the input in a way that is not easily noticeable to a human observer,
+but can mislead the model into making errors. In particular, when it comes
+to black-box attacks, the attacker has limited or no knowledge of the 
+model's internal structure and parameters. These attacks can be performed on
+deep neural networks models; in our case, the model is MNIST, designed for the
+classification of handwritten digits. 
+The MNIST dataset consists of 28x28 pixel grayscale images of handwritten digits (0 through 9).
+The objective of our experiment is to compare the optimization of an adversarial attack using
+zeroth-order Frank-Wolfe algorithms in a black-box setting.
+The task is to find a non-trivial adversarial perturbation such that the DNN model
+makes the incorrect prediction.
+
+\subsection{Methods}
+
+We follow the setup (Liu et al., 2019) with the nn-carlini pretrained Deep Neural Network for
+the MNIST dataset; this repository is also used by Gao et al. for their experiments, so starting
+from it as a base for the implementation of the optimization algorithms seemed obvious.
+
+\subsection{Implementation Differences from Reference Papers}
+
+For time and computational constraints, there are some implementative differences 
+between the theoretical papers and our actual implementation.
+
+\begin{itemize}
+   \item In FZCGS the gradient is calculated over a set of 
+   randomized directions, same as ZOSCGS, instead of over all 
+   the directions built by basis vectors; this is done because 
+   while less "precise" over the same amount of epochs, 
+   calculating the gradient over all basis vector directions 
+   requires too many queries to the oracle and time per epoch.
+   As of the current implementation, a 200 iterations-long 
+   optimization run takes about 12 hours to complete.
+
+   \item In the \texttt{condg} (conditional gradient) step for FZCGS,
+   we added an additional stopping condition on the size of alpha. Otherwise,
+   it would have taken a lot just for one iteration. (say it better).
+\end{itemize}
+
+
+\section{Results}
+
+\subsection{FZCGS}
+
+\subsection{SGFFW}
 
 
 
@@ -294,28 +449,6 @@ enclose the citation number in square brackets, for
 example~\cite{Authors14}.  Where appropriate, include the name(s) of
 editors of referenced books.
 
-
-
-%-------------------------------------------------------------------------
-\subsection{Illustrations, graphs, and photographs}
-
-All graphics should be centered.  Please ensure that any point you wish to
-make is resolvable in a printed copy of the paper.  Resize fonts in figures
-to match the font in the body text, and choose line widths which render
-effectively in print.  Many readers (and reviewers), even of an electronic
-copy, will choose to print your paper in order to read it.  You cannot
-insist that they do otherwise, and therefore must not assume that they can
-zoom in to see tiny details on a graphic.
-
-When placing figures in \LaTeX, it's almost always best to use
-\verb+\includegraphics+, and to specify the  figure width as a multiple of
-the line width as in the example below
-{\small\begin{verbatim}
-   \usepackage[dvips]{graphicx} ...
-   \includegraphics[width=0.8\linewidth]
-                   {myfile.eps}
-\end{verbatim}
-}
 
 
 {\small

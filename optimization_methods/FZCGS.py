@@ -21,7 +21,7 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
         if dot <= eta or alpha_t < 0.00001 or t==10000:
             return u_t.reshape(u_0.shape) 
         
-        a_dot = np.dot((1/gamma)*(u_t - u_0.reshape(-1)) - g_t , v-u_t ) # to check if (u_t - u_0.reshape(-1)) is correct.
+        a_dot = np.dot((1/gamma)*(u_t - u_0.reshape(-1)) - g_t , v-u_t )
         a_normsq = (np.linalg.norm(v - u_t) ** 2)
         alpha_t = min(1, a_dot / ((1/gamma) * a_normsq))
 
@@ -32,7 +32,7 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
 
 
 def FZCGS(x_0, N, q, K, L, obj_func, MGR):
-    print("BRO")
+
     t_start = time.time()
     best_Loss = 1e10
     best_delImgAT = x_0  # at the end, x_k will be -> best_delImgAT
@@ -52,14 +52,12 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
 
     mu= 1 / np.sqrt(d*K) # =0.11
     #mu = 0.01
-    gamma = 1/3*L # 0.01?
+    gamma = 1/3*L # 0.01
     eta = 1/K # =0.1
     #eta = 0.01
 
     x_k = x_0.copy()
     
-
-    print("fuckface")
     ### FEASIBLE SET ### 
 
     # This feasible set contains all possible directions in which sum of elements 
@@ -72,6 +70,12 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
     OMEGA = OMEGA - OMEGA_rm
     OMEGA= np.concatenate((OMEGA,-OMEGA), axis=1)
 
+
+    ##### Using L1-ball ######
+
+    #num_samples = 2000
+    #OMEGA = obj_func.Sample_from_L1_Ball(d, 2, num_samples)
+
     ####################
 
     q_val = d 
@@ -83,10 +87,8 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
     loss_l2_values = []
     loss_attack_values = []
 
-    # The code is using the original obj_func from the git repo. We need to implement the adversarial obj_func from the Gao et al. paper
-    print("before iterating")
+    
     for k in range(N): # iterations, change to N
-        print("another iteration ffs")
         if np.mod(k, q) == 0: 
             S1_batch_idx = np.random.choice(np.arange(0, MGR.parSet['nFunc']), n, replace = False) 
             v_k = np.zeros(x_k.shape)
@@ -113,7 +115,6 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
                             )
                 #if np.mod(k, 100) == 0:
                 #    print(v_k)
-                print("diocan")
             v_k = (1/q_val)*(1/(2*mu))*(v_k/q)+v_prev
             
         
@@ -123,9 +124,7 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
         x_k = condg(v_k, x_k, gamma, eta, OMEGA)
         #print("New Perturbation x_k:", x_k[:,:,0])
 
-        print("eheheh")
         obj_func.evaluate(x_k, np.array([]), False)
-        print("porcoddio")
         print('Iteration Index: ', k)
         obj_func.print_current_loss()
         

@@ -27,7 +27,6 @@ sys.path.append('optimization_methods/')
 
 import os
 import numpy as np
-from keras.utils import to_categorical
 import argparse
 
 from setup_mnist import MNIST, MNISTModel
@@ -36,12 +35,15 @@ import optimization_methods.ObjectiveFunc as ObjectiveFunc
 import optimization_methods.FZCGS as fzcgs
 import optimization_methods.SGFFW as sgffw
 
+import tensorflow as tf
+
 from SysManager import SYS_MANAGER
 
 MGR = SYS_MANAGER()
 
 
 def main():
+    
     data, model =  MNIST(), MNISTModel(restore="models/mnist", use_log=True)
     origImgs, origLabels, origImgID = util.generate_attack_data_set(data, model, MGR)
     delImgAT_Init = np.zeros(origImgs[0].shape)
@@ -79,6 +81,8 @@ def main():
 
 
 if __name__ == "__main__":
+    tf.get_logger().setLevel('WARNING')
+    tf.keras.utils.disable_interactive_logging()
     parser = argparse.ArgumentParser()
 
     ##### GENERAL PARAMETERS #####
@@ -87,7 +91,7 @@ if __name__ == "__main__":
     parser.add_argument('-target_label', type=int, default=4, help="The target digit to attack")
     parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
     parser.add_argument('-M', type=int, default=50, help="Length of each stage/epoch")
-    parser.add_argument('-nStage', type=int, default=20000, help="Number of stages/epochs")
+    parser.add_argument('-nStage', type=int, default=1000, help="Number of stages/epochs")
     parser.add_argument('-const', type=float, default=3, help="Weight put on the attack loss")
     parser.add_argument('-batch_size', type=int, default=5, help="Number of functions sampled for each iteration in the optmization steps")
     parser.add_argument('-rv_dist', default='UnitSphere', help="Choose from UnitSphere and UnitBall")

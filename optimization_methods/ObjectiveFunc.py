@@ -54,12 +54,36 @@ class OBJFUNC:
     def Draw_UnitSphere(self):
         sample = np.random.normal(0.0, 1.0, size=self.origImgs[0].shape)
         return sample/np.linalg.norm(sample.flatten())
+    
+    def Sample_from_L1_Ball(self, dim, R, num_samples):
+    # Sample uniformly from the L1 sphere (sum of absolute values equals R)
+        u = np.random.uniform(0, 1, (num_samples, dim))
+        u_sorted = np.sort(u, axis=1)
+        u_diff = np.diff(u_sorted, axis=1, prepend=0, append=1)
+        
+        # Ensure that u_diff has the same shape as signs
+        u_diff = u_diff[:, :-1]  # Trim the last column to match the shape of signs
+        
+        signs = np.random.choice([-1, 1], (num_samples, u_diff.shape[1]))
 
-    def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
+        # Scale the samples to lie within the L1 ball (sum of absolute values <= R)
+        samples = R * u_diff * signs
+        return samples
+
+    def evaluate(self, delImgAT, randBatchIdx, s=1.0, addQueryCount = True):
 
         if( randBatchIdx.size == 0 ):
             randBatchIdx = np.arange(0, self.nFunc)
         batchSize = randBatchIdx.size
+
+        ####################################################################
+
+        #this objective function is the same as the one in the original repo. 
+        #constraints are enforced in the actual optimization methods.
+
+        #delImgAT = np.clip(delImgAT_infn, -s, s)
+
+        ####################################################################
 
         origLabels_Batched = self.origLabels[randBatchIdx]
         delImgsAT = np.repeat(np.expand_dims(delImgAT, axis=0), self.nFunc, axis=0)
@@ -78,32 +102,7 @@ class OBJFUNC:
 
         return self.Loss_Overall
 
-    #def evaluate(self, delImgAT, randBatchIdx, s=1, addQueryCount=True):
-        if randBatchIdx.size == 0:
-            randBatchIdx = np.arange(0, self.nFunc)
-        batchSize = randBatchIdx.size
 
-        origLabels_Batched = self.origLabels[randBatchIdx]
-        delImgsAT = np.repeat(np.expand_dims(delImgAT, axis=0), self.nFunc, axis=0)
-        #delImgsAT = s * np.tanh(delImgsAT / s) # Ensure ||delImgsAT||_inf <= s with a differentiable function for clipping
-        advImgs = np.tanh(self.origImgsAT + delImgsAT) / 2.0
-        advImgs_Batched = advImgs[randBatchIdx]
-
-        if addQueryCount:
-            self.query_count += batchSize
-
-        Score_AdvImgs_Batched = self.model.model.predict(advImgs_Batched)
-        Score_TargetLab = np.maximum(1e-20, np.sum(origLabels_Batched * Score_AdvImgs_Batched, 1))
-        Score_NonTargetLab = np.maximum(1e-20, np.amax((1 - origLabels_Batched) * Score_AdvImgs_Batched - (origLabels_Batched * 10000), 1))
-        
-        # Use Score_TargetLab and Score_NonTargetLab in the calculation of Loss_Attack
-        Loss_Attack = np.amax(np.maximum(0.0, -np.log(Score_NonTargetLab) + np.log(Score_TargetLab)))
-
-        self.Loss_L2 = self.imageSize * np.mean(np.square(advImgs - self.origImgs) / 2.0)
-        self.Loss_Attack = Loss_Attack
-        self.Loss_Overall = self.Loss_L2 + self.const * self.Loss_Attack
-
-        return self.Loss_Overall
 
     def gradient_estimation(self, delImgAT, mu, q, randBatchIdx = np.array([])):
         f = self.evaluate(delImgAT, randBatchIdx)
