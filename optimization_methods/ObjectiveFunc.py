@@ -70,7 +70,7 @@ class OBJFUNC:
         samples = R * u_diff * signs
         return samples
 
-    def evaluate(self, delImgAT, randBatchIdx, s=1.0, addQueryCount = True):
+    def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
 
         if( randBatchIdx.size == 0 ):
             randBatchIdx = np.arange(0, self.nFunc)

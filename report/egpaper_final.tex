@@ -412,7 +412,7 @@ We follow the setup (Liu et al., 2019) with the nn-carlini pretrained Deep Neura
 the MNIST dataset; this repository is also used by Gao et al. for their experiments, so starting
 from it as a base for the implementation of the optimization algorithms seemed obvious.
 
-\subsection{Implementation Differences from Reference Papers}
+\subsubsection{Implementation Differences from Reference Papers}
 
 For time and computational constraints, there are some implementative differences 
 between the theoretical papers and our actual implementation.
@@ -432,23 +432,80 @@ between the theoretical papers and our actual implementation.
    it would have taken a lot just for one iteration. (say it better).
 \end{itemize}
 
+\subsubsection{Feasible Sets}
+
+The objective function used is the same from the base repository.
+The algorithms were tested on two types of feasible sets:
+
+\begin{itemize}
+   \item For SGFFW (also FZCGS?), $\|\delta\|_{\infty} \leq s$ was used. This is 
+   also the same constraint that Gao et al. references in section 4.3 for the formulation
+   of the problem.
+   \item For FZCGS, we used a set similar to a L1-Ball,  containing
+   all the possible directions in which the sum of the elements is zero. All elements, except
+   one, are equal to 2000/d, and their opposite. Please refer to the implementation of FZCGS for more information. 
+\end{itemize}
+
 
 \section{Results}
 
 \subsection{FZCGS}
 
+\begin{center}
+   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_querycount.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.40]{img/RDSA_loss_vs_time.png}
+\end{center}
+
 \subsection{SGFFW}
 
+The SGFFW algorithm from Sahu et al. was evaluated with the three
+gradient approximation schemes (RDSA, I-RDSA, KWSA).
+Below, the comparison between these variants is presented,
+comparing the overall losses against iteration count, query count and time.
+
+\begin{center}
+   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_querycount.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.40]{img/RDSA_loss_vs_time.png}
+\end{center}
+
+\subsection{All Algorithms Compared}
+
+\begin{center}
+   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_querycount.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.4]{img/RDSA_loss_vs_time.png}
+\end{center}
+
+\section{Discussion}
 
 
-\section{References}
+\section{Conclusion}
 
-List and number all bibliographical references in 9-point Times,
-single-spaced, at the end of your paper. When referenced in the text,
-enclose the citation number in square brackets, for
-example~\cite{Authors14}.  Where appropriate, include the name(s) of
-editors of referenced books.
+From our study, FZCGS has the best performance when considering iterations;
+however, when compared to all of the SGFFW variants, it is the worst in terms
+of query count and time.
 
+SGFFW with RDSA is the fastest, time-wise, between the algorithms we considered.
 
 
 {\small

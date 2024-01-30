@@ -81,8 +81,8 @@ def main():
 
 
 if __name__ == "__main__":
-    tf.get_logger().setLevel('WARNING')
-    tf.keras.utils.disable_interactive_logging()
+    #tf.get_logger().setLevel('WARNING')
+    #tf.keras.utils.disable_interactive_logging()
     parser = argparse.ArgumentParser()
 
     ##### GENERAL PARAMETERS #####
