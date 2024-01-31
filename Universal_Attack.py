@@ -49,7 +49,7 @@ def main():
     delImgAT_Init = np.zeros(origImgs[0].shape)
     objfunc = ObjectiveFunc.OBJFUNC(MGR, model, origImgs, origLabels)
 
-    MGR.Add_Parameter('eta', MGR.parSet['alpha']/origImgs[0].size)
+    #MGR.Add_Parameter('eta', MGR.parSet['alpha']/origImgs[0].size)
     MGR.Log_MetaData()
 
 
@@ -89,8 +89,8 @@ if __name__ == "__main__":
     parser.add_argument('-optimizer', default='FZCGS', help="choose from FZCGS and SGFFW")
     parser.add_argument('-nFunc', type=int, default=10, help="Number of images being attacked at once")
     parser.add_argument('-target_label', type=int, default=4, help="The target digit to attack")
-    parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
-    parser.add_argument('-M', type=int, default=50, help="Length of each stage/epoch")
+    #parser.add_argument('-alpha', type=float, default=1.0, help="Optimizer's step size being (alpha)/(input image size)")
+    #parser.add_argument('-M', type=int, default=50, help="Length of each stage/epoch")
     parser.add_argument('-nStage', type=int, default=1000, help="Number of stages/epochs")
     parser.add_argument('-const', type=float, default=3, help="Weight put on the attack loss")
     parser.add_argument('-batch_size', type=int, default=5, help="Number of functions sampled for each iteration in the optmization steps")
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     ##### FZCGS PARAMETERS #####
     parser.add_argument('-q', type=int, default=3, help="batch size for S2 in FZCGS")
     parser.add_argument('-K', type=float, default=0.1, help="K parameter for FZCGS")
-    parser.add_argument('-L', type=float, default=50, help="L (Lipschitz constant) parameter for FZCGS") #change Lipshitz constant?
+    parser.add_argument('-L', type=float, default=50, help="L (Lipschitz constant) parameter for FZCGS")
     
 
     ##### SGFFW PARAMETERS ####

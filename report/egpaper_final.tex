@@ -419,8 +419,8 @@ between the theoretical papers and our actual implementation.
 
 \begin{itemize}
    \item In FZCGS the gradient is calculated over a set of 
-   randomized directions, same as ZOSCGS, instead of over all 
-   the directions built by basis vectors; this is done because 
+   randomized directions, instead of over all 
+   the directions built by the basis vectors; this is done because 
    while less "precise" over the same amount of epochs, 
    calculating the gradient over all basis vector directions 
    requires too many queries to the oracle and time per epoch.
@@ -428,8 +428,8 @@ between the theoretical papers and our actual implementation.
    optimization run takes about 12 hours to complete.
 
    \item In the \texttt{condg} (conditional gradient) step for FZCGS,
-   we added an additional stopping condition on the size of alpha. Otherwise,
-   it would have taken a lot just for one iteration. (say it better).
+   we added an additional stopping condition on the size of alpha.
+   This was done because the conditional gradient step takes a lot of time.
 \end{itemize}
 
 \subsubsection{Feasible Sets}
@@ -449,26 +449,117 @@ The algorithms were tested on two types of feasible sets:
 
 \section{Results}
 
+The general parameters (non algorithm-specific) for the setup are presented in the table below.
+
+\begin{table}[h]
+   \centering
+   \begin{tabular}{ccc}
+       \hline
+       Parameter & Value & Description \\
+       \hline
+       nStage & 200 & Iterations\\
+       \hline
+       targetlabel & 4 & Target digit\\
+       \hline
+       nFunc & 10 & Imgs to attack simult.\\
+       \hline
+       const & 3 & Weight on attack loss\\
+       \hline
+       rvdist & UnitSphere & Random perturb. distr.\\ 
+       \hline
+   \end{tabular}\\
+   \caption{General Setup Parameters} 
+   \label{tab:general_params}
+\end{table}
+
 \subsection{FZCGS}
 
-\begin{center}
-   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
-\end{center}
+The FZCGS algorithm presented in Gao et al. is evaluated with respect to 
+loss against iteration count, query count and running time, as the below graphs show:
+
+\begin{table}[h]
+   \centering
+   \begin{tabular}{ccc}
+       \hline
+       Parameter & Value & Description \\
+       \hline
+       nStage & 200 & Iterations\\
+       \hline
+       q & 3 & Batch size S2\\
+       \hline
+       K & 0.1 & K parameter\\
+       \hline
+       L & 50 & Lipschitz constant \\
+       \hline
+       mu & 0.11 & mu param in Gao\\
+       \hline
+       gamma & 0.01 & gamma param in Gao\\
+       \hline
+       eta & 0.1 & eta param in Gao\\
+       \hline
+   \end{tabular}\\
+   \caption{Parameters of the FZCGS Algorithm} 
+   \label{tab:fzcgs_params}
+\end{table}
+
+
+%\begin{center}
+%   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
+%\end{center}
+%
+%\begin{center}
+%   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_querycount.png}
+%\end{center}
+%
+%\begin{center}
+%   \includegraphics*[scale=0.40]{img/RDSA_loss_vs_time.png}
+%\end{center}
+
+It is clear from the graphs that 200 iterations are enough for FZCGS to converge to a good loss,
+though, since it uses multiple stochastic examples at each epoch for each direction analyzed, 
+performances considering query count and time are where FZCGS presents criticalities.
+In fact, as we will discuss later, it is the worst algorithm in terms of running time between the ones
+considered in this study. 
+
+Moreover, we can see that after around 50 iterations, the algorithm stops 
+improving in regards of the overall loss. This has to be attributed to the \texttt{Attack Loss} dropping
+to zero, and this makes FZCGS converge to a higher loss compared to SGFFW, as we show in the next section.
+The following graph shows this behaviour:
 
 \begin{center}
-   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_querycount.png}
+   \includegraphics*[scale=0.45]{img/FZCGS_Losses_example.png}
 \end{center}
 
-\begin{center}
-   \includegraphics*[scale=0.40]{img/RDSA_loss_vs_time.png}
-\end{center}
 
 \subsection{SGFFW}
 
 The SGFFW algorithm from Sahu et al. was evaluated with the three
 gradient approximation schemes (RDSA, I-RDSA, KWSA).
 Below, the comparison between these variants is presented,
-comparing the overall losses against iteration count, query count and time.
+comparing the overall losses against iteration count, query count and running time.
+
+
+\begin{table}[h]
+   \centering
+   \begin{tabular}{ccc}
+       \hline
+       Parameter & Value & Description \\
+       \hline
+       nStage & 200 & Iterations\\
+       \hline
+       gamma & $\frac{2}{t+8}$ & gamma param \\
+       \hline
+       m & 50 & num of random vectors\\
+       \hline
+       s (RDSA) & 8 & s for RDSA\\
+       s (I-RDSA) & 4 & s for I-RDSA\\
+       s (I-RDSA) & 4 & s for KWSA\\
+       \hline
+   \end{tabular}\\
+   \caption{Parameters of the SGFFW Algorithm} 
+   \label{tab:sgffw_params}
+\end{table}
+
 
 \begin{center}
    \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
@@ -482,21 +573,80 @@ comparing the overall losses against iteration count, query count and time.
    \includegraphics*[scale=0.40]{img/RDSA_loss_vs_time.png}
 \end{center}
 
+\begin{center}
+   \includegraphics*[scale=0.7]{img/I-RDSA_loss_iterations.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.7]{img/I-RDSA_loss_query_count.png}
+\end{center}
+
+\begin{center}
+   \includegraphics*[scale=0.40]{img/I-RDSA_loss_time.png}
+\end{center}
+
+The RDSA gradient approximation scheme is the fastest between all other
+schemes in terms of time, but requires more iterations.
+I-RDSA requires less iterations to reach a similar loss to RDSA,
+taking more time and having a much larger query count.
+Between SGFFW approximation schemes, KWSA is the worst in terms of time,
+while requiring the same iteration count.
+
+Therefore, we can say that when considering iterations, I-RDSA is the best, followed by RDSA.
+Considering query count, RDSA and I-RDSA are similar when iterations are matched, and RDSA is Faster
+in terms of time than both I-RDSA and KWSA; in particular, KWSA requires x time.
+
+Since this study focuses more on performance over queries, but iteration count is also taken into account
+in other papers, we can say that overall I-RDSA performs best between the three approximation schemes for SGFFW. 
+
 \subsection{All Algorithms Compared}
 
-\begin{center}
-   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
-\end{center}
+In this section, we are going to compare all the algorithms and determine which performing best,
+taking into account the best loss achieved, the iteration count, the query count and running time.
 
-\begin{center}
-   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_querycount.png}
-\end{center}
+\begin{table}[h]
+   \centering
+   \begin{tabular}{ccc}
+       \hline
+       Algorithm & Metric & Value \\
+       \hline
+       FZCGS & Best Loss & x\\
+            & Iteration Count & x\\
+            & Query Count & x\\
+            & Running Time & x\\
+       \hline
+       SGFFW with RDSA & Best Loss & x\\
+                        & Iteration Count & x\\
+                        & Query Count & x\\
+                        & Running Time & x\\
+       \hline
+       SGFFW with I-RDSA & Best Loss & x\\
+                        & Iteration Count & x\\
+                        & Query Count & x\\
+                        & Running Time & x\\
+       \hline
+       SGFFW with KWSA & Best Loss & x\\
+                        & Iteration Count & x\\
+                        & Query Count & x\\
+                        & Running Time & x\\
+       \hline
+   \end{tabular}\\
+   \caption{Overall results and statistics compared} 
+   \label{tab:overall_results}
+\end{table}
 
-\begin{center}
-   \includegraphics*[scale=0.4]{img/RDSA_loss_vs_time.png}
-\end{center}
+%\begin{center}
+%   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_iterations.png}
+%\end{center}
+%
+%\begin{center}
+%   \includegraphics*[scale=0.7]{img/RDSA_loss_vs_querycount.png}
+%\end{center}
+%
+%\begin{center}
+%   \includegraphics*[scale=0.4]{img/RDSA_loss_vs_time.png}
+%\end{center}
 
-\section{Discussion}
 
 
 \section{Conclusion}
@@ -505,8 +655,17 @@ From our study, FZCGS has the best performance when considering iterations;
 however, when compared to all of the SGFFW variants, it is the worst in terms
 of query count and time.
 
-SGFFW with RDSA is the fastest, time-wise, between the algorithms we considered.
+SGFFW with RDSA is the fastest, time-wise, between the algorithms we considered,
+being second in terms of iteration counts after FZCGS.
 
+Overall, there is no overall best method, and each one has its own strengths and weaknesses.
+Nonetheless, SGFFW with I-RDSA gradient approximation scheme showed a remarkable
+compromise between running time, iteration count and query count.
+
+
+\section{Code Availability}
+
+All the code, data and results are accessible at the following \href{https://github.com/marcouderzo/FW-AdversarialAttacks}{link}.
 
 {\small
 \bibliographystyle{ieee_fullname}
