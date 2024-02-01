@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex egpaper_final"] 0 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 0
+["bibtex egpaper_final"] 1706741628 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 1706741628
   "./ieee_fullname.bst" 1700380841 19905 72b73f4cb1c51eaa1a7af8ecad2b6bfb ""
   "egbib.bib" 1700380841 937 ce2754a99c542265dfc58835f19fac9d ""
-  "egpaper_final.aux" 0 -1 0 "pdflatex"
+  "egpaper_final.aux" 1706741628 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
   (generated)
   "egpaper_final.bbl"
   "egpaper_final.blg"
-["pdflatex"] 1706729711 "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1706729711
+["pdflatex"] 1706741620 "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1706741620
   "C:/Users/marco/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1702800188 174193 bda9811284f76e0b882d999906e2cdc9 ""
   "C:/Users/marco/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1651670773 10246960 54e4382c0e27a0f4b3869cb5fd33ca90 ""
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -124,8 +124,8 @@
   "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" 1706729694 25940 44bea83094dc7f57fc3e6b8f11c4e0d9 ""
   "cvpr.sty" 1700380841 8185 9c85e63bb1830fdefeac27370f229c9e ""
   "cvpr_eso.sty" 1700380841 3878 6aa7c08ff2621006e0603349e40a30a8 ""
-  "egpaper_final.aux" 1706729711 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
-  "egpaper_final.bbl" 1706729698 65 d49dbf9d4b1773efa2d694c4016814c1 "bibtex egpaper_final"
+  "egpaper_final.aux" 1706729716 4663 5394fa1b8987ad8c378e6198aab432ed "pdflatex"
+  "egpaper_final.bbl" 1706741620 65 d49dbf9d4b1773efa2d694c4016814c1 "bibtex egpaper_final"
   "egpaper_final.tex" 1706729694 25940 44bea83094dc7f57fc3e6b8f11c4e0d9 ""
   "eso-pic.sty" 1700380841 9460 d2935ae95b5cd343fcf5887ff530288d ""
   "img/FZCGS_Losses_example.png" 1700380841 33421 4bddfe157e9fd918b6bc18123051f1ce ""
