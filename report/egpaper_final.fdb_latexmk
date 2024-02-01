@@ -6,7 +6,7 @@
   (generated)
   "egpaper_final.bbl"
   "egpaper_final.blg"
-["pdflatex"] 1706786210 "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1706786210
+["pdflatex"] 1706796393 "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1706796393
   "C:/Users/marco/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1702800188 174193 bda9811284f76e0b882d999906e2cdc9 ""
   "C:/Users/marco/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1651670773 10246960 54e4382c0e27a0f4b3869cb5fd33ca90 ""
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -121,12 +121,12 @@
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1575571282 9715 b051d5b493d9fe5f4bc251462d039e5f ""
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/tex/latex/tools/xspace.sty" 1636710260 4545 d84d0b20a11b9c36c6ecf45697be591c ""
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" 1706786182 27393 1b31fb73bfbee86619874aa014419e0f ""
+  "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" 1706796374 27289 3daba490bdbc28be3eed960d971f6d64 ""
   "cvpr.sty" 1700380841 8185 9c85e63bb1830fdefeac27370f229c9e ""
   "cvpr_eso.sty" 1700380841 3878 6aa7c08ff2621006e0603349e40a30a8 ""
-  "egpaper_final.aux" 1706786210 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
-  "egpaper_final.bbl" 1706786186 65 d49dbf9d4b1773efa2d694c4016814c1 "bibtex egpaper_final"
-  "egpaper_final.tex" 1706786182 27393 1b31fb73bfbee86619874aa014419e0f ""
+  "egpaper_final.aux" 1706796393 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "egpaper_final.bbl" 1706796378 65 d49dbf9d4b1773efa2d694c4016814c1 "bibtex egpaper_final"
+  "egpaper_final.tex" 1706796374 27289 3daba490bdbc28be3eed960d971f6d64 ""
   "eso-pic.sty" 1700380841 9460 d2935ae95b5cd343fcf5887ff530288d ""
   "img/All_loss_vs_iterations.png" 1706776692 38027 c6fa931b423fac0dee35342e236e5cbd ""
   "img/All_loss_vs_querycount.png" 1706776708 33393 326b2e876aa7710f680d6952f55f0cb5 ""
@@ -138,6 +138,7 @@
   "img/SGFFW_loss_vs_iterations.png" 1706776640 36613 dc32f62c0a443f2f36149cd35eed4ad2 ""
   "img/SGFFW_loss_vs_querycount.png" 1706776654 45368 077f12e36fb80a8b858c6487ac99f710 ""
   "img/SGFFW_loss_vs_runningtime.png" 1706776668 41881 4aa1ea72a279c1bced7a0e7d7344ee70 ""
+  "img/condg_lobanov.png" 1706792758 49895 a857e4d41da257ba543bc933e53ee664 ""
   "img/condg_pseudocode.jpg" 1705335580 43718 34aa5bfbb666b1123ffbb2a2bdc59165 ""
   "img/fzcgs_pseudocode.jpg" 1705335528 69451 663e382241b402eadbcc1d68e2d22987 ""
   "img/sgffw_pseudocode.png" 1705510511 102285 59f18c031d55a00267bf46a402ebdc63 ""

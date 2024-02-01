@@ -55,20 +55,6 @@ class OBJFUNC:
         sample = np.random.normal(0.0, 1.0, size=self.origImgs[0].shape)
         return sample/np.linalg.norm(sample.flatten())
     
-    def Sample_from_L1_Ball(self, dim, R, num_samples):
-    # Sample uniformly from the L1 sphere (sum of absolute values equals R)
-        u = np.random.uniform(0, 1, (num_samples, dim))
-        u_sorted = np.sort(u, axis=1)
-        u_diff = np.diff(u_sorted, axis=1, prepend=0, append=1)
-        
-        # Ensure that u_diff has the same shape as signs
-        u_diff = u_diff[:, :-1]  # Trim the last column to match the shape of signs
-        
-        signs = np.random.choice([-1, 1], (num_samples, u_diff.shape[1]))
-
-        # Scale the samples to lie within the L1 ball (sum of absolute values <= R)
-        samples = R * u_diff * signs
-        return samples
 
     def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
 

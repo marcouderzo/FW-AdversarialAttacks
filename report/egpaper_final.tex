@@ -260,21 +260,21 @@ Employing a gradient approximation techniques or another influences the
 algorithm's dimension dependence and the computational cost, also in terms of query number and time.
 
 \begin{itemize}
-   \item {Kiefer-Wolfowitz Stochastic Approximation (KWSA):
+   \item {Kiefer-Wolfowitz Stochastic Approximation (KWSA)}:
    \[
    \mathbf{g}\left(\mathbf{x}_{t} ; \mathbf{y}\right)=\sum_{i=1}^{d} \frac{F\left(\mathbf{x}_{t}+c_{t} \mathbf{e}_{i} ; \mathbf{y}\right)-F\left(\mathbf{x}_{t} ; \mathbf{y}\right)}{c_{t}} \mathbf{e}_{i}
-   \]}
-   \item {Random Direction Stochastic Approximation (RDSA): \newline
+   \]
+   \item {Random Direction Stochastic Approximation (RDSA)}: \newline
    \text{Sample} $\mathbf{z}_{t} \sim \mathcal{N}\left(0, \mathbf{I}_{d}\right)$,
    \[
    \mathbf{g}\left(\mathbf{x}_{t} ; \mathbf{y}, \mathbf{z}_{t}\right)=\frac{F\left(\mathbf{x}_{t}+c_{t} \mathbf{z}_{t} ; \mathbf{y}\right)-F\left(\mathbf{x}_{t} ; \mathbf{y}\right)}{c_{t}} \mathbf{z}_{t}
-   \]}
+   \]
 
-   \item {Improvised Random Direction Stochastic Approximation (I-RDSA): \newline
+   \item {Improvised Random Direction Stochastic Approximation (I-RDSA)}: \newline
    \text {Sample}$\left\{\mathbf{z}_{i, t}\right\}_{i=1}^{m} \sim \mathcal{N}\left(0, \mathbf{I}_{d}\right)$ \newline
    \[
       \mathbf{g}\left(\mathbf{x}_{t} ; \mathbf{y}, \mathbf{z}_{t}\right)=\frac{1}{m} \sum_{i=1}^{m} \frac{F\left(\mathbf{x}_{t}+c_{t} \mathbf{z}_{i, t} ; \mathbf{y}\right)-F\left(\mathbf{x}_{t} ; \mathbf{y}\right)}{c_{t}} \mathbf{z}_{i, t}
-   \]}
+   \]
 \end{itemize} \\
 
 Below, the pseudocode of the algorithm is presented: \\
@@ -404,39 +404,40 @@ For time and computational constraints, there are some implementative difference
 between the theoretical papers and our actual implementation.
 
 \begin{itemize}
-   \item In FZCGS the gradient is calculated over a set of 
-   randomized directions, instead of over all 
-   the directions built by the basis vectors; this is done because 
-   while it is less precise over the same amount of epochs, 
-   calculating the gradient over all basis vector directions 
-   requires too many queries to the oracle and time per epoch.
-   As of the current implementation, a 200 iterations-long 
-   optimization run takes about around 40 hours to complete.
+   \item In FZCGS, the \texttt{condg} function from Gao et al. has been swapped
+   for the same conditional gradient procedure from Lobanov et al., because it
+   was failing to learn. Though, the pseudocode implementation described by Lobanov et al. works
+   correctly, and should provide the same result as the Gao et al. pseudocode implementation.
+
+   \begin{center}
+      \includegraphics*[scale=0.6]{img/condg_pseudocode.jpg}\newline
+      \
+      \small{Conditional Gradient procedure (Gao et al.)}
+   \end{center}
+
+   \begin{center}
+      \includegraphics*[scale=0.55]{img/condg_lobanov.png}\newline
+      \
+      \small{Conditional Gradient procedure (Lobanov et al.)}
+   \end{center}
 
    \item In the \texttt{condg} (conditional gradient) step for FZCGS,
    we added an additional stopping condition on the size of alpha.
    This was done because the conditional gradient step, if not limited
    on iteration number, the stopping condition would not be reached even
-   after 100000 loops. This, together with the extremely large query count
+   after a great amount of iterations. This, together with the extremely large query count
    that FZCGS requires, would have made infeasible the optimization process,
    because of time constraints. The newly added stopping condition speeds up
    the conditional gradient function running time, whilst causing negligible
    deviations from the original result.
 \end{itemize}
 
-\subsubsection{Feasible Sets}
+\subsubsection{Feasible Set}
 
 The objective function used is the same from the base repository.
-The algorithms were tested on two types of feasible sets:
-
-\begin{itemize}
-   \item For SGFFW (also FZCGS?), $\|\delta\|_{\infty} \leq s$ was used. This is 
-   also the same constraint that Gao et al. references in section 4.3 for the formulation
-   of the problem.
-   \item For FZCGS, we used a set similar to a L1-Ball,  containing
-   all the possible directions in which the sum of the elements is zero. All elements, except
-   one, are equal to 2000/d, and their opposite.
-\end{itemize}
+The algorithms were tested on the feasible set $\|\delta\|_{\infty} \leq s$,
+which is the same constraint that Gao et al. references in section 4.3 for the formulation
+of the problem of generation of adversarial examples.
 
 
 \section{Results}
@@ -484,11 +485,13 @@ loss against iteration count, query count and running time, as the below graphs 
        \hline
        L & 50 & Lipschitz constant \\
        \hline
-       mu & 0.11 & mu param in Gao\\
+       mu & 0.11 & mu parameter in Gao\\
        \hline
-       gamma & 0.01 & gamma param in Gao\\
+       gamma & 0.01 & gamma parameter in Gao\\
        \hline
-       eta & 0.1 & eta param in Gao\\
+       eta & 0.1 & Tolerance parameter in Gao\\
+       \hline
+       s & 4 & Value for $\|\delta\|_{\infty} \leq s$\\
        \hline
    \end{tabular}
    \
@@ -545,13 +548,13 @@ comparing the overall losses against iteration count, query count and running ti
        \hline
        nStage & 200 & Iterations\\
        \hline
-       gamma & $\frac{2}{t+8}$ & gamma param \\
+       gamma & $\frac{2}{t+8}$ & gamma parameter \\
        \hline
-       m & 50 & num of random vectors\\
+       m & 50 & Number of random vectors\\
        \hline
-       s (RDSA) & 8 & s for RDSA\\
-       s (I-RDSA) & 4 & s for I-RDSA\\
-       s (I-RDSA) & 4 & s for KWSA\\
+       s (RDSA) & 8 & Value for $\|\delta\|_{\infty} \leq s$\\
+       s (I-RDSA) & 4 & \\
+       s (I-RDSA) & 4 & \\
        \hline
    \end{tabular}
    \
@@ -686,11 +689,6 @@ Nonetheless, SGFFW with I-RDSA gradient approximation scheme showed a remarkable
 compromise between running time, iteration count and query count, making it the 'best' overall method
 for zeroth-order Frank-Wolfe optimization in the setting of adversarial attacks against the MNIST dataset.
 
-
-
-\section{Code Availability}
-
-All the code, data and results are accessible at the following \href{https://github.com/marcouderzo/FW-AdversarialAttacks}{link}.
 
 {\small
 \bibliographystyle{ieee_fullname}

@@ -4,7 +4,7 @@ import time
 
 np.random.seed(2023)
 
-def condg(g_0, u_0, gamma, eta, OMEGA):
+def condg_gao(g_0, u_0, gamma, eta): # does not learn.
     u_t = u_0.reshape(-1)
     g_t = g_0.reshape(-1)
     t = 0 # timesteps 
@@ -12,10 +12,8 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
 
     while(True):
         print(t)
-        u_expanded = np.repeat(np.expand_dims(u_t,axis=1),OMEGA.shape[1],axis=1)
-        v_i = np.argmax(np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA+u_expanded))
-        v = OMEGA[:,v_i]
-        dot = np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),-OMEGA[:,v_i]+u_t)
+        v = -np.sign(g_t+(1/gamma)*(u_t-u_0.reshape(-1)))*4
+        dot = np.dot(g_t+(1/gamma)*(u_t-u_0.reshape(-1)),v+u_t)
 
         if dot <= eta or alpha_t < 0.00001 or t==100000:
             return u_t.reshape(u_0.shape) 
@@ -26,6 +24,27 @@ def condg(g_0, u_0, gamma, eta, OMEGA):
 
         u_t = (1 - alpha_t)*u_t + alpha_t*v
             
+        t+=1
+
+
+def condg(g_0, u_0, gamma, eta):
+    u = u_0.reshape(-1)
+    g = g_0.reshape(-1)
+    t = 0
+    alpha_t=1
+
+    while True:
+        print(t)
+        v = -np.sign(g)*4
+
+        dot=np.dot(g, u - v)
+
+        if dot <= eta or alpha_t<0.00001 or t==100000:
+            return u.reshape(u_0.shape)
+        
+        alpha_t = min(np.dot(g, u - v) / (gamma * np.linalg.norm(u - v) ** 2), 1)
+        u = u + alpha_t * (v - u)
+        g = g_0.reshape(-1) + eta * (u - u_0.reshape(-1))
         t+=1
 
 
@@ -56,26 +75,6 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
     #eta = 0.01
 
     x_k = x_0.copy()
-    
-    ### FEASIBLE SET ### 
-
-    # This feasible set contains all possible directions in which sum of elements 
-    # is equal to 0 (all elems except ones equal to 2000/d and their opposite)
-    # We need to implement ||delta||_inf <= s, as in the Gao et al. paper
-
-    num = 2000
-    OMEGA = np.eye(d)*num
-    OMEGA_rm = np.full(OMEGA.shape, num/d)
-    OMEGA = OMEGA - OMEGA_rm
-    OMEGA= np.concatenate((OMEGA,-OMEGA), axis=1)
-
-
-    ##### Using L1-ball ######
-
-    #num_samples = 2000
-    #OMEGA = obj_func.Sample_from_L1_Ball(d, 2, num_samples)
-
-    ####################
 
     q_val = d 
     e = np.eye(d)
@@ -120,7 +119,7 @@ def FZCGS(x_0, N, q, K, L, obj_func, MGR):
         v_prev = v_k.copy() 
         x_prev = x_k.copy() 
 
-        x_k = condg(v_k, x_k, gamma, eta, OMEGA)
+        x_k = condg(v_k, x_k, gamma, eta)
         #print("New Perturbation x_k:", x_k[:,:,0])
 
         obj_func.evaluate(x_k, np.array([]), False)
