@@ -3,6 +3,10 @@
 <b>Frank-Wolfe Variants for Adversarial Attacks. Final Project for Optimization for Data Science Course, UniPD</b>
 </p>
 
+<p align="center">  
+<b>Author: Marco Uderzo</b>
+</p>
+
 </br>
 
 
