@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.4)  1 FEB 2024 15:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.5.4)  1 FEB 2024 16:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -318,6 +318,13 @@ LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 42
  (C:\Users\marco\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
+
+LaTeX Warning: Citation `Gao' on page 1 undefined on input line 50.
+
+
+LaTeX Warning: Citation `Sahu' on page 1 undefined on input line 51.
+
+
 Underfull \hbox (badness 1275) in paragraph at lines 103--105
 []\OT1/ptm/m/n/10 The ex-act min-i-miza-tion in the first for-mula in the
  []
@@ -338,6 +345,18 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 Underfull \hbox (badness 10000) in paragraph at lines 138--140
 
  []
+
+
+LaTeX Warning: Citation `Gao' on page 2 undefined on input line 157.
+
+
+LaTeX Warning: Citation `Gao' on page 2 undefined on input line 186.
+
+
+LaTeX Warning: Citation `Sahu' on page 2 undefined on input line 187.
+
+
+LaTeX Warning: Citation `Gao' on page 2 undefined on input line 197.
 
 <img/fzcgs_pseudocode.jpg, id=21, 329.43076pt x 247.52475pt>
 File: img/fzcgs_pseudocode.jpg Graphic file (type jpg)
@@ -372,6 +391,9 @@ Overfull \hbox (3.35614pt too wide) in paragraph at lines 220--221
 Underfull \hbox (badness 10000) in paragraph at lines 220--221
 
  []
+
+
+LaTeX Warning: Citation `Sahu' on page 3 undefined on input line 236.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 263--264
@@ -420,11 +442,13 @@ Package pdftex.def Info: img/sgffw_pseudocode.png  used on input line 283.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3 <./img/fzcgs_pseudocode.jpg> <./img/condg_pseudocode.jpg>]
-Underfull \hbox (badness 1062) in paragraph at lines 374--374
-[] \OT1/ptm/b/n/12 . Frank-Wolfe for Ad-ver-sar-ial At-tacks on
- []
+
+LaTeX Warning: Citation `Sahu' on page 4 undefined on input line 288.
 
 [4 <./img/sgffw_pseudocode.png>]
+
+LaTeX Warning: Citation `Gao' on page 5 undefined on input line 396.
+
 File: img/condg_pseudocode.jpg Graphic file (type jpg)
 <use img/condg_pseudocode.jpg>
 Package pdftex.def Info: img/condg_pseudocode.jpg  used on input line 413.
@@ -437,139 +461,147 @@ Package pdftex.def Info: img/condg_lobanov.png  used on input line 419.
 
 Underfull \vbox (badness 1990) has occurred while \output is active []
 
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<img/FZCGS_loss_vs_iterations.png, id=61, 607.7907pt x 284.0211pt>
-File: img/FZCGS_loss_vs_iterations.png Graphic file (type png)
-<use img/FZCGS_loss_vs_iterations.png>
-Package pdftex.def Info: img/FZCGS_loss_vs_iterations.png  used on input line 504.
-(pdftex.def)             Requested size: 212.72993pt x 99.40886pt.
-[5 <./img/condg_lobanov.png>]
-<img/FZCGS_loss_vs_querycount.png, id=76, 607.7907pt x 284.0211pt>
-File: img/FZCGS_loss_vs_querycount.png Graphic file (type png)
-<use img/FZCGS_loss_vs_querycount.png>
-Package pdftex.def Info: img/FZCGS_loss_vs_querycount.png  used on input line 508.
-(pdftex.def)             Requested size: 212.72993pt x 99.40886pt.
-<img/FZCGS_loss_vs_runningtime.png, id=78, 607.7907pt x 284.0211pt>
-File: img/FZCGS_loss_vs_runningtime.png Graphic file (type png)
-<use img/FZCGS_loss_vs_runningtime.png>
-Package pdftex.def Info: img/FZCGS_loss_vs_runningtime.png  used on input line 512.
-(pdftex.def)             Requested size: 212.72993pt x 99.40886pt.
-<img/FZCGS_Losses.png, id=80, 406.1574pt x 328.8285pt>
-File: img/FZCGS_Losses.png Graphic file (type png)
-<use img/FZCGS_Losses.png>
-Package pdftex.def Info: img/FZCGS_Losses.png  used on input line 527.
-(pdftex.def)             Requested size: 182.76913pt x 147.97145pt.
-<img/SGFFW_loss_vs_iterations.png, id=82, 614.295pt x 284.0211pt>
-File: img/SGFFW_loss_vs_iterations.png Graphic file (type png)
-<use img/SGFFW_loss_vs_iterations.png>
-Package pdftex.def Info: img/SGFFW_loss_vs_iterations.png  used on input line 567.
-(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
-<img/SGFFW_loss_vs_querycount.png, id=84, 614.295pt x 284.0211pt>
-File: img/SGFFW_loss_vs_querycount.png Graphic file (type png)
-<use img/SGFFW_loss_vs_querycount.png>
-Package pdftex.def Info: img/SGFFW_loss_vs_querycount.png  used on input line 571.
-(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
-<img/SGFFW_loss_vs_runningtime.png, id=86, 614.295pt x 284.0211pt>
-File: img/SGFFW_loss_vs_runningtime.png Graphic file (type png)
-<use img/SGFFW_loss_vs_runningtime.png>
-Package pdftex.def Info: img/SGFFW_loss_vs_runningtime.png  used on input line 575.
-(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
- [6 <./img/FZCGS_loss_vs_iterations.png> <./img/FZCGS_loss_vs_querycount.png> <./img/FZCGS_loss_vs_runningtime.png> <./img/FZCGS_Losses.png> <./img/SGFFW_loss_vs_iterations.png> <./img/SGFFW_loss_vs_querycount.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 581--584
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 585--587
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 588--591
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 592--594
-
- []
-
-
-Overfull \hbox (4.29259pt too wide) in paragraph at lines 608--638
- [][] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<img/All_loss_vs_iterations.png, id=107, 614.295pt x 284.0211pt>
-File: img/All_loss_vs_iterations.png Graphic file (type png)
-<use img/All_loss_vs_iterations.png>
-Package pdftex.def Info: img/All_loss_vs_iterations.png  used on input line 651.
-(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
-<img/xLimit_All_loss_vs_iterations.png, id=109, 623.6901pt x 284.0211pt>
-File: img/xLimit_All_loss_vs_iterations.png Graphic file (type png)
-<use img/xLimit_All_loss_vs_iterations.png>
-Package pdftex.def Info: img/xLimit_All_loss_vs_iterations.png  used on input line 654.
-(pdftex.def)             Requested size: 218.2948pt x 99.40886pt.
-<img/All_loss_vs_querycount.png, id=111, 614.295pt x 284.0211pt>
-File: img/All_loss_vs_querycount.png Graphic file (type png)
-<use img/All_loss_vs_querycount.png>
-Package pdftex.def Info: img/All_loss_vs_querycount.png  used on input line 660.
-(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
+<img/mnist_comparison.png, id=61, 150.8034pt x 120.6909pt>
+File: img/mnist_comparison.png Graphic file (type png)
+<use img/mnist_comparison.png>
+Package pdftex.def Info: img/mnist_comparison.png  used on input line 471.
+(pdftex.def)             Requested size: 150.80302pt x 120.6906pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7 <./img/SGFFW_loss_vs_runningtime.png> <./img/All_loss_vs_iterations.png> <./img/xLimit_All_loss_vs_iterations.png>]
-<img/xLimit_All_loss_vs_querycount.png, id=127, 633.0852pt x 284.0211pt>
+ [5 <./img/condg_lobanov.png>]
+
+LaTeX Warning: Citation `Gao' on page 6 undefined on input line 480.
+
+<img/FZCGS_loss_vs_iterations.png, id=75, 607.7907pt x 284.0211pt>
+File: img/FZCGS_loss_vs_iterations.png Graphic file (type png)
+<use img/FZCGS_loss_vs_iterations.png>
+Package pdftex.def Info: img/FZCGS_loss_vs_iterations.png  used on input line 513.
+(pdftex.def)             Requested size: 212.72993pt x 99.40886pt.
+<img/FZCGS_loss_vs_querycount.png, id=77, 607.7907pt x 284.0211pt>
+File: img/FZCGS_loss_vs_querycount.png Graphic file (type png)
+<use img/FZCGS_loss_vs_querycount.png>
+Package pdftex.def Info: img/FZCGS_loss_vs_querycount.png  used on input line 517.
+(pdftex.def)             Requested size: 212.72993pt x 99.40886pt.
+<img/FZCGS_loss_vs_runningtime.png, id=79, 607.7907pt x 284.0211pt>
+File: img/FZCGS_loss_vs_runningtime.png Graphic file (type png)
+<use img/FZCGS_loss_vs_runningtime.png>
+Package pdftex.def Info: img/FZCGS_loss_vs_runningtime.png  used on input line 521.
+(pdftex.def)             Requested size: 212.72993pt x 99.40886pt.
+
+Underfull \vbox (badness 3333) has occurred while \output is active []
+
+<img/FZCGS_Losses.png, id=81, 406.1574pt x 328.8285pt>
+File: img/FZCGS_Losses.png Graphic file (type png)
+<use img/FZCGS_Losses.png>
+Package pdftex.def Info: img/FZCGS_Losses.png  used on input line 536.
+(pdftex.def)             Requested size: 182.76913pt x 147.97145pt.
+
+
+LaTeX Warning: Citation `Sahu' on page 6 undefined on input line 542.
+
+<img/SGFFW_loss_vs_iterations.png, id=83, 614.295pt x 284.0211pt>
+File: img/SGFFW_loss_vs_iterations.png Graphic file (type png)
+<use img/SGFFW_loss_vs_iterations.png>
+Package pdftex.def Info: img/SGFFW_loss_vs_iterations.png  used on input line 572.
+(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
+[6 <./img/mnist_comparison.png (PNG copy)> <./img/FZCGS_loss_vs_iterations.png> <./img/FZCGS_loss_vs_querycount.png> <./img/FZCGS_loss_vs_runningtime.png> <./img/FZCGS_Losses.png>]
+<img/SGFFW_loss_vs_querycount.png, id=102, 614.295pt x 284.0211pt>
+File: img/SGFFW_loss_vs_querycount.png Graphic file (type png)
+<use img/SGFFW_loss_vs_querycount.png>
+Package pdftex.def Info: img/SGFFW_loss_vs_querycount.png  used on input line 576.
+(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
+<img/SGFFW_loss_vs_runningtime.png, id=104, 614.295pt x 284.0211pt>
+File: img/SGFFW_loss_vs_runningtime.png Graphic file (type png)
+<use img/SGFFW_loss_vs_runningtime.png>
+Package pdftex.def Info: img/SGFFW_loss_vs_runningtime.png  used on input line 580.
+(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 586--589
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 590--592
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 593--596
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 597--599
+
+ []
+
+
+Overfull \hbox (4.29259pt too wide) in paragraph at lines 613--643
+ [][] 
+ []
+
+<img/All_loss_vs_iterations.png, id=106, 614.295pt x 284.0211pt>
+File: img/All_loss_vs_iterations.png Graphic file (type png)
+<use img/All_loss_vs_iterations.png>
+Package pdftex.def Info: img/All_loss_vs_iterations.png  used on input line 656.
+(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
+<img/xLimit_All_loss_vs_iterations.png, id=108, 623.6901pt x 284.0211pt>
+File: img/xLimit_All_loss_vs_iterations.png Graphic file (type png)
+<use img/xLimit_All_loss_vs_iterations.png>
+Package pdftex.def Info: img/xLimit_All_loss_vs_iterations.png  used on input line 659.
+(pdftex.def)             Requested size: 218.2948pt x 99.40886pt.
+[7 <./img/SGFFW_loss_vs_iterations.png> <./img/SGFFW_loss_vs_querycount.png> <./img/SGFFW_loss_vs_runningtime.png> <./img/All_loss_vs_iterations.png>]
+<img/All_loss_vs_querycount.png, id=126, 614.295pt x 284.0211pt>
+File: img/All_loss_vs_querycount.png Graphic file (type png)
+<use img/All_loss_vs_querycount.png>
+Package pdftex.def Info: img/All_loss_vs_querycount.png  used on input line 665.
+(pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
+<img/xLimit_All_loss_vs_querycount.png, id=128, 633.0852pt x 284.0211pt>
 File: img/xLimit_All_loss_vs_querycount.png Graphic file (type png)
 <use img/xLimit_All_loss_vs_querycount.png>
-Package pdftex.def Info: img/xLimit_All_loss_vs_querycount.png  used on input line 663.
+Package pdftex.def Info: img/xLimit_All_loss_vs_querycount.png  used on input line 668.
 (pdftex.def)             Requested size: 221.58315pt x 99.40886pt.
-<img/All_loss_vs_runningtime.png, id=129, 614.295pt x 284.0211pt>
+<img/All_loss_vs_runningtime.png, id=130, 614.295pt x 284.0211pt>
 File: img/All_loss_vs_runningtime.png Graphic file (type png)
 <use img/All_loss_vs_runningtime.png>
-Package pdftex.def Info: img/All_loss_vs_runningtime.png  used on input line 669.
+Package pdftex.def Info: img/All_loss_vs_runningtime.png  used on input line 674.
 (pdftex.def)             Requested size: 215.00647pt x 99.40886pt.
-<img/xLimit_All_loss_vs_runningtime.png, id=131, 620.7993pt x 284.0211pt>
+<img/xLimit_All_loss_vs_runningtime.png, id=132, 620.7993pt x 284.0211pt>
 File: img/xLimit_All_loss_vs_runningtime.png Graphic file (type png)
 <use img/xLimit_All_loss_vs_runningtime.png>
-Package pdftex.def Info: img/xLimit_All_loss_vs_runningtime.png  used on input line 672.
+Package pdftex.def Info: img/xLimit_All_loss_vs_runningtime.png  used on input line 677.
 (pdftex.def)             Requested size: 217.283pt x 99.40886pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 679--680
+Underfull \hbox (badness 10000) in paragraph at lines 684--685
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 685--687
+Underfull \hbox (badness 10000) in paragraph at lines 690--692
 
  []
 
-(egpaper_final.bbl
+(egpaper_final.bbl) [8 <./img/xLimit_All_loss_vs_iterations.png> <./img/All_loss_vs_querycount.png> <./img/xLimit_All_loss_vs_querycount.png> <./img/All_loss_vs_runningtime.png> <./img/xLimit_All_loss_vs_runningtime.png>] (egpaper_final.aux)
 
-LaTeX Warning: Empty `thebibliography' environment on input line 3.
+LaTeX Warning: There were undefined references.
 
-) [8 <./img/All_loss_vs_querycount.png> <./img/xLimit_All_loss_vs_querycount.png> <./img/All_loss_vs_runningtime.png> <./img/xLimit_All_loss_vs_runningtime.png>] (egpaper_final.aux)
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 9902 strings out of 478582
- 158922 string characters out of 2844345
+ 9913 strings out of 478582
+ 159145 string characters out of 2844345
  450325 words of memory out of 3000000
- 27877 multiletter control sequences out of 15000+600000
+ 27885 multiletter control sequences out of 15000+600000
  492219 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 70i,10n,76p,423b,407s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 70i,10n,76p,423b,399s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}<C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on egpaper_final.pdf (8 pages, 833022 bytes).
+Output written on egpaper_final.pdf (8 pages, 919386 bytes).
 PDF statistics:
- 220 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
- 194 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 228 PDF objects out of 1000 (max. 8388607)
+ 38 named destinations out of 1000 (max. 500000)
+ 205 words of extra memory for PDF output out of 10000 (max. 10000000)
 

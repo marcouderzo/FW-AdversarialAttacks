@@ -1,3 +1,14 @@
-\begin{thebibliography}{}\itemsep=-1pt
+\begin{thebibliography}{1}\itemsep=-1pt
+
+\bibitem{Gao}
+Gao et al.
+\newblock Can stochastic zeroth-order frank-wolfe method converge faster for
+  non-convex problems?
+\newblock 2020.
+
+\bibitem{Sahu}
+Sahu et al.
+\newblock Towards gradient free and projection free stochastic optimization.
+\newblock 2019.
 
 \end{thebibliography}

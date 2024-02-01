@@ -47,8 +47,8 @@
    solving constrained optimization problems with a better iteration complexity,
    expecially with respect to oracle queries.
    We take into consideration: Faster Zeroth-Order Conditional Gradient Sliding (FZCGS)
-   (Gao et al., 2018) and Stochastic Gradient Free Frank Wolfe 
-   (SGFFW) (Sahu et al., 2019). The latter algorithm branches off into three slightly different ones,
+   (Gao et al., 2020)\cite{Gao} and Stochastic Gradient Free Frank Wolfe 
+   (SGFFW) (Sahu et al., 2019)\cite{Sahu}. The latter algorithm branches off into three slightly different ones,
    depending on the Stochastic Approximation Technique used, namely: classical Kiefer-Wolfowitz
    Stochastic Approximation (KWSA) (Kiefer and Wolfowitz, 1952), Random Directions Stochastic Approximation
    (RDSA) (Nesterov and Spokoiny, 2011; Duchi et al., 2015), and an Improvised RDSA (IRDSA). 
@@ -154,7 +154,7 @@ x_{t+1} & =\left(1-\gamma_{t+1}\right) x_{t}+\gamma_{t+1} v_{t},
 When the gradient of a function is unavailable, it is possible to estimate it using function evaluations,
 by calculating the function values at selected points. More in detail, we can use the difference of the
 function value with respect to two random points to estimate the gradient. In our case, we employ the use of
-the coordinate-wise gradient estimator, as in the Gao et al. paper.
+the coordinate-wise gradient estimator, as in the Gao et al.\cite{Gao} paper.
 
 The coordinate-wise gradient estimator is defined as follows:
 
@@ -183,8 +183,8 @@ where
 This project involves the implementation of the following algorithms:
 
 \begin{itemize}
-   \item \textbf{FZCGS}: Faster Zeroth-Order Conditional Gradient Sliding Method
-   \item \textbf{SGFFW}: Stochastic Gradient-Free Frank-Wolfe with the following gradient approximation schemes:
+   \item \textbf{FZCGS}: Faster Zeroth-Order Conditional Gradient Sliding Method \cite{Gao}
+   \item \textbf{SGFFW}: Stochastic Gradient-Free Frank-Wolfe \cite{Sahu} with the following gradient approximation schemes:
       \begin{itemize}
          \item \textbf{KWSA}: Kiefer-Wolfowitz stochastic approximation
          \item \textbf{RDSA}: random directions stochastic approximation
@@ -194,7 +194,7 @@ This project involves the implementation of the following algorithms:
 
 \subsection{FZCGS: Faster Zeroth-Order Conditional Gradient Sliding Method}
 
-Gao et al. proposes a novel algorithm to optimize the following constrained finite-sum minimization problem:
+Gao et al.\cite{Gao} proposes a novel algorithm to optimize the following constrained finite-sum minimization problem:
 
 \[
 \min _{x \in \Omega} F(x)=\frac{1}{n} \sum_{i=1}^{n} f_{i}(x)
@@ -211,7 +211,7 @@ where
 %With FZCGS using a Function Query Oracle (FQO), the authors of the paper achieved a  
 %$O\left(\frac{n^{1 / 2} d}{\epsilon^{2}}\right)$ oracle complexity.
 
-FZCGS incorporates an acceleration technique from the non-convex Frank-Wolfe method. (?)
+FZCGS incorporates an acceleration technique from the non-convex Frank-Wolfe method.
 It uses gradient estimation and Conditional Gradient Sliding to perform the updates.
 The convergence rate depends on the choice of the parameters. The pseudocode of the algorithm is presented below.
 
@@ -233,7 +233,7 @@ in terms of convergence speed and performance, also thanks to the acceleration t
 
 \subsection{Stochastic Gradient-Free Frank-Wolfe Algorithm}
 
-Sahu et al. propose a stochastic zeroth-order Frank-Wolfe algorithm for the following stochastic
+Sahu et al.\cite{Sahu} propose a stochastic zeroth-order Frank-Wolfe algorithm for the following stochastic
 optimization problem, particularly significant in deep learning:
 
 \[
@@ -285,7 +285,7 @@ Below, the pseudocode of the algorithm is presented: \\
 
 \subsubsection{Primal Gap}
 
-Sahu et al. state the main results involving the different gradient 
+Sahu et al.\cite{Sahu} state the main results involving the different gradient 
 approximation schemes for the primal (sub-optimality) gap, which provide a characterization of
 \[E\left[f\left(x_{t}\right)-f\left(x^{*}\right)\right]\].
 
@@ -371,7 +371,7 @@ duality gap of $\epsilon$ is given by $O\left(\frac{d}{\epsilon^{3}}\right)$.
 In particular, it is also asserted that the initial conditions 
 are forgotten as $O(1 / T)$.
 
-\section{Frank-Wolfe for Adversarial Attacks on MNIST}
+\section{Frank-Wolfe for Black-Box Adversarial Attacks on MNIST}
 
 \subsection{Adversarial Attacks}
 
@@ -393,7 +393,7 @@ makes the incorrect prediction.
 \subsection{Methods}
 
 We follow the setup (Liu et al., 2019) with the nn-carlini pre-trained Deep Neural Network for
-the MNIST dataset; this base repository is also used by Gao et al. for their experiments, so starting
+the MNIST dataset; this base repository is also used by Gao et al.\cite{Gao} for their experiments, so starting
 from it as a base for the implementation of the optimization algorithms was deemed to be a good
 way to set up our experiments as well. The base repository, as per Gao et al., can be found
 at the following \href{https://github.com/IBM/ZOSVRG-BlackBox-Adv}{link}.
@@ -448,7 +448,7 @@ The general parameters (non algorithm-specific) for the setup are presented in t
    \centering
    \begin{tabular}{ccc}
        \hline
-       Parameter & Value & Description \\
+       \textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
        \hline
        nStage & 200 & Iterations\\
        \hline
@@ -460,22 +460,31 @@ The general parameters (non algorithm-specific) for the setup are presented in t
        \hline
        rvdist & UnitSphere & Random perturb. distr.\\ 
        \hline
-   \end{tabular}
+   \end{tabular}\\
    \
    \caption{General Setup Parameters} 
    \label{tab:general_params}
 \end{table}
 
+
+\begin{center}
+   \includegraphics*[scale=1]{img/mnist_comparison.png}
+\end{center}
+
+\begin{center}
+   \small{Adversarial examples generated by the algorithms.}
+\end{center}
+
 \subsection{FZCGS}
 
-The FZCGS algorithm presented in Gao et al. is evaluated with respect to 
+The FZCGS algorithm presented in Gao et al.\cite{Gao} is evaluated with respect to 
 loss against iteration count, query count and running time, as the below graphs show:
 
 \begin{table}[h]
    \centering
    \begin{tabular}{ccc}
        \hline
-       Parameter & Value & Description \\
+       \textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
        \hline
        nStage & 200 & Iterations\\
        \hline
@@ -527,14 +536,10 @@ The following graph shows this behaviour:
    \includegraphics*[scale=0.45]{img/FZCGS_Losses.png}
 \end{center}
 
-Interestingly, FZCGS reaches the best loss in the whole run at the 16th iteration (out of 200), though
-we regard it as an outlier value, since the loss for the rest of the run stays over the best loss.
-
-
 
 \subsection{SGFFW}
 
-The SGFFW algorithm from Sahu et al. was evaluated with the three
+The SGFFW algorithm from Sahu et al.\cite{Sahu} was evaluated with the three
 gradient approximation schemes (RDSA, I-RDSA, KWSA).
 Below, the comparison between these variants is presented,
 comparing the overall losses against iteration count, query count and running time.
@@ -544,7 +549,7 @@ comparing the overall losses against iteration count, query count and running ti
    \centering
    \begin{tabular}{ccc}
        \hline
-       Parameter & Value & Description \\
+       \textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
        \hline
        nStage & 200 & Iterations\\
        \hline
@@ -607,7 +612,7 @@ the iteration count, the query count and running time, measured in hours.
    \centering
    \begin{tabular}{ccc}
        \hline
-       Algorithm & Metric & Value \\
+       \textbf{Algorithm} & \textbf{Metric} & \textbf{Value} \\
        \hline
        FZCGS & Best Loss & 12.689 @ 16th it.\\
             & Last Loss & 16.9\\
