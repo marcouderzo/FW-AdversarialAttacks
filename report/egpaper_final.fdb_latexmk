@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex egpaper_final"] 1706783356 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 1706783356
+["bibtex egpaper_final"] 0 "egpaper_final.aux" "egpaper_final.bbl" "egpaper_final" 0
   "./ieee_fullname.bst" 1700380841 19905 72b73f4cb1c51eaa1a7af8ecad2b6bfb ""
   "egbib.bib" 1700380841 937 ce2754a99c542265dfc58835f19fac9d ""
-  "egpaper_final.aux" 1706783355 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "egpaper_final.aux" 0 -1 0 "pdflatex"
   (generated)
   "egpaper_final.bbl"
   "egpaper_final.blg"
-["pdflatex"] 1706783345 "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1706783345
+["pdflatex"] 1706786210 "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" "egpaper_final.pdf" "egpaper_final" 1706786210
   "C:/Users/marco/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1702800188 174193 bda9811284f76e0b882d999906e2cdc9 ""
   "C:/Users/marco/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1651670773 10246960 54e4382c0e27a0f4b3869cb5fd33ca90 ""
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -121,12 +121,12 @@
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1575571282 9715 b051d5b493d9fe5f4bc251462d039e5f ""
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/tex/latex/tools/xspace.sty" 1636710260 4545 d84d0b20a11b9c36c6ecf45697be591c ""
   "C:/Users/marco/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
-  "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" 1706783343 27602 43e4cfded8ce50ee84ac39db04e7ccb2 ""
+  "c:/Users/marco/OneDrive - Università degli Studi di Padova/Marco/UniPD/MSc Data Science/Optimization for Data Science/Project/FW-AdversarialAttacks/report/egpaper_final.tex" 1706786182 27393 1b31fb73bfbee86619874aa014419e0f ""
   "cvpr.sty" 1700380841 8185 9c85e63bb1830fdefeac27370f229c9e ""
   "cvpr_eso.sty" 1700380841 3878 6aa7c08ff2621006e0603349e40a30a8 ""
-  "egpaper_final.aux" 1706782449 4663 f176fc469ce11cb8d6730a21cb979c04 "pdflatex"
-  "egpaper_final.bbl" 1706783345 65 d49dbf9d4b1773efa2d694c4016814c1 "bibtex egpaper_final"
-  "egpaper_final.tex" 1706783343 27602 43e4cfded8ce50ee84ac39db04e7ccb2 ""
+  "egpaper_final.aux" 1706786210 34 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "egpaper_final.bbl" 1706786186 65 d49dbf9d4b1773efa2d694c4016814c1 "bibtex egpaper_final"
+  "egpaper_final.tex" 1706786182 27393 1b31fb73bfbee86619874aa014419e0f ""
   "eso-pic.sty" 1700380841 9460 d2935ae95b5cd343fcf5887ff530288d ""
   "img/All_loss_vs_iterations.png" 1706776692 38027 c6fa931b423fac0dee35342e236e5cbd ""
   "img/All_loss_vs_querycount.png" 1706776708 33393 326b2e876aa7710f680d6952f55f0cb5 ""

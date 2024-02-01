@@ -229,7 +229,7 @@ The results of FZCGS from the paper are:
 \end{itemize}
 
 In the paper, the experimental results demonstate the superiority of FZCGS over baseline methods
-in terms of onvergence speed and performance, also thanks to the acceleration technique that this algorithm employs.
+in terms of convergence speed and performance, also thanks to the acceleration technique that this algorithm employs.
 
 \subsection{Stochastic Gradient-Free Frank-Wolfe Algorithm}
 
@@ -316,7 +316,7 @@ Given the sequence $\gamma_{t}= \frac{2}{t+8}$:
 The dimension dependence of the primal gap is quantified to be
 $d^{1 / 3}$. At the same time, the dependence on iterations
 $O\left(T^{-1 / 3}\right)$, matches that of the stochastic 
-Frank-Wolfe which has asccess to first-order information. 
+Frank-Wolfe which has access to first-order information. 
 The improvement of the rates for I-RDSA and KWSA are at the cost of
 extra directional derivatives at each iteration.
 The number of queries to the SZO to obtain a primal gap of $\epsilon$ is given by 
@@ -371,22 +371,6 @@ duality gap of $\epsilon$ is given by $O\left(\frac{d}{\epsilon^{3}}\right)$.
 In particular, it is also asserted that the initial conditions 
 are forgotten as $O(1 / T)$.
 
-The algorithm's effectiveness is demonstrated in blackbox 
-optimization scenarios, specifically in optimizing complex 
-forward models from physics without analytical expressions. 
-The proposed algorithm converges to a first-order stationary 
-point, showcasing its applicability in challenging black-box 
-optimization problems.
-
-The paper introduces a stochastic zeroth order FrankWolfe 
-algorithm suitable for non-smooth optimization problems. 
-The algorithm's reliance on hard-toestimate parameters is
-minimal, making it practical for real-world applications. 
-Convergence rates for the primal gap and Frank-Wolfe duality 
-gap are quantified, highlighting its efficiency. 
-Experimental results on various datasets further support its efficacy.
-
-
 \section{Frank-Wolfe for Adversarial Attacks on MNIST}
 
 \subsection{Adversarial Attacks}
@@ -408,9 +392,11 @@ makes the incorrect prediction.
 
 \subsection{Methods}
 
-We follow the setup (Liu et al., 2019) with the nn-carlini pretrained Deep Neural Network for
-the MNIST dataset; this repository is also used by Gao et al. for their experiments, so starting
-from it as a base for the implementation of the optimization algorithms seemed obvious.
+We follow the setup (Liu et al., 2019) with the nn-carlini pre-trained Deep Neural Network for
+the MNIST dataset; this base repository is also used by Gao et al. for their experiments, so starting
+from it as a base for the implementation of the optimization algorithms was deemed to be a good
+way to set up our experiments as well. The base repository, as per Gao et al., can be found
+at the following \href{https://github.com/IBM/ZOSVRG-BlackBox-Adv}{link}.
 
 \subsubsection{Implementation Differences from Reference Papers}
 
@@ -421,15 +407,21 @@ between the theoretical papers and our actual implementation.
    \item In FZCGS the gradient is calculated over a set of 
    randomized directions, instead of over all 
    the directions built by the basis vectors; this is done because 
-   while less "precise" over the same amount of epochs, 
+   while it is less precise over the same amount of epochs, 
    calculating the gradient over all basis vector directions 
    requires too many queries to the oracle and time per epoch.
    As of the current implementation, a 200 iterations-long 
-   optimization run takes about 12 hours to complete.
+   optimization run takes about around 40 hours to complete.
 
    \item In the \texttt{condg} (conditional gradient) step for FZCGS,
    we added an additional stopping condition on the size of alpha.
-   This was done because the conditional gradient step takes a lot of time.
+   This was done because the conditional gradient step, if not limited
+   on iteration number, the stopping condition would not be reached even
+   after 100000 loops. This, together with the extremely large query count
+   that FZCGS requires, would have made infeasible the optimization process,
+   because of time constraints. The newly added stopping condition speeds up
+   the conditional gradient function running time, whilst causing negligible
+   deviations from the original result.
 \end{itemize}
 
 \subsubsection{Feasible Sets}
@@ -443,7 +435,7 @@ The algorithms were tested on two types of feasible sets:
    of the problem.
    \item For FZCGS, we used a set similar to a L1-Ball,  containing
    all the possible directions in which the sum of the elements is zero. All elements, except
-   one, are equal to 2000/d, and their opposite. Please refer to the implementation of FZCGS for more information. 
+   one, are equal to 2000/d, and their opposite.
 \end{itemize}
 
 
