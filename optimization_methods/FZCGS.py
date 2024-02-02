@@ -44,7 +44,7 @@ def condg(g_0, u_0, gamma, eta):
         
         alpha_t = min(np.dot(g, u - v) / (gamma * np.linalg.norm(u - v) ** 2), 1)
         u = u + alpha_t * (v - u)
-        g = g_0.reshape(-1) + eta * (u - u_0.reshape(-1))
+        g = g_0.reshape(-1) + gamma * (u - u_0.reshape(-1))
         t+=1
 
 
