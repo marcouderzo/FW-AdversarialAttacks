@@ -3,6 +3,10 @@
 <b>Frank-Wolfe Variants for Adversarial Attacks. Final Project for Optimization for Data Science Course, UniPD</b>
 </p>
 
+<p align="center">  
+<b>Author: Marco Uderzo</b>
+</p>
+
 </br>
 
 
@@ -46,7 +50,7 @@
  expecially with respect to oracle queries.
  
  We take into consideration: Faster Zeroth-Order Conditional Gradient Sliding (FZCGS)
- (Gao et al., 2018) and Stochastic Gradient Free Frank Wolfe 
+ (Gao et al., 2020) and Stochastic Gradient Free Frank Wolfe 
  (SGFFW) (Sahu et al., 2019). The latter algorithm branches off into three slightly different ones,
  depending on the Stochastic Approximation Technique used, namely: classical Kiefer-Wolfowitz
  Stochastic Approximation (KWSA) (Kiefer and Wolfowitz, 1952), Random Directions Stochastic Approximation
