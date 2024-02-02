@@ -47,7 +47,7 @@
    solving constrained optimization problems with a better iteration complexity,
    expecially with respect to oracle queries.
    We take into consideration: Faster Zeroth-Order Conditional Gradient Sliding (FZCGS)
-   (Gao et al., 2020)\cite{Gao} and Stochastic Gradient Free Frank Wolfe 
+   (Gao et al., 2020)\cite{Gao} and Stochastic Gradient-Free Frank Wolfe 
    (SGFFW) (Sahu et al., 2019)\cite{Sahu}. The latter algorithm branches off into three slightly different ones,
    depending on the Stochastic Approximation Technique used, namely: classical Kiefer-Wolfowitz
    Stochastic Approximation (KWSA) (Kiefer and Wolfowitz, 1952), Random Directions Stochastic Approximation
@@ -231,7 +231,7 @@ The results of FZCGS from the paper are:
 In the paper, the experimental results demonstate the superiority of FZCGS over baseline methods
 in terms of convergence speed and performance, also thanks to the acceleration technique that this algorithm employs.
 
-\subsection{Stochastic Gradient-Free Frank-Wolfe Algorithm}
+\subsection{SGFFW: Stochastic Gradient-Free Frank-Wolfe Algorithm}
 
 Sahu et al.\cite{Sahu} propose a stochastic zeroth-order Frank-Wolfe algorithm for the following stochastic
 optimization problem, particularly significant in deep learning:
@@ -375,7 +375,7 @@ are forgotten as $O(1 / T)$.
 
 \subsection{Adversarial Attacks}
 
-An Adversarial Attacks is a deliberate manipulation of input data with the 
+An \textit{Adversarial Attack} is a deliberate manipulation of input data with the 
 intention of causing a machine learning model to make a mistake or produce 
 incorrect outputs. The goal of an adversarial attack is to perturb 
 the input in a way that is not easily noticeable to a human observer,
@@ -423,7 +423,7 @@ between the theoretical papers and our actual implementation.
 
    \item In the \texttt{condg} (conditional gradient) step for FZCGS,
    we added an additional stopping condition on the size of alpha.
-   This was done because the conditional gradient step, if not limited
+   This was done because in the conditional gradient step, if not limited
    on iteration number, the stopping condition would not be reached even
    after a great amount of iterations. This, together with the extremely large query count
    that FZCGS requires, would have made infeasible the optimization process,
@@ -436,13 +436,13 @@ between the theoretical papers and our actual implementation.
 
 The objective function used is the same from the base repository.
 The algorithms were tested on the feasible set $\|\delta\|_{\infty} \leq s$,
-which is the same constraint that Gao et al. references in section 4.3 for the formulation
+which is the same constraint that Gao et al.\cite{Gao} references in section 4.3 for the formulation
 of the problem of generation of adversarial examples.
 
 
 \section{Results}
 
-The general parameters (non algorithm-specific) for the setup are presented in the table below.
+The general common parameters (non algorithm-specific) for the setup are presented in the table below.
 
 \begin{table}[h]
    \centering
@@ -486,7 +486,7 @@ loss against iteration count, query count and running time, as the below graphs 
        \hline
        \textbf{Parameter} & \textbf{Value} & \textbf{Description} \\
        \hline
-       nStage & 200 & Iterations\\
+       nStage & 100 & Iterations\\
        \hline
        q & 3 & Batch size S2\\
        \hline
@@ -494,15 +494,15 @@ loss against iteration count, query count and running time, as the below graphs 
        \hline
        L & 50 & Lipschitz constant \\
        \hline
-       mu & 0.11 & mu parameter in Gao\\
+       mu & 0.11 & $\mu$ parameter in \cite{Gao}\\
        \hline
-       gamma & 0.01 & gamma parameter in Gao\\
+       gamma & 0.01 & $\gamma$ parameter in \cite{Gao}\\
        \hline
-       eta & 0.1 & Tolerance parameter in Gao\\
+       eta & 0.1 & $\eta$ tolerance parameter in \cite{Gao}\\
        \hline
        s & 4 & Value for $\|\delta\|_{\infty} \leq s$\\
        \hline
-   \end{tabular}
+   \end{tabular}\\
    \
    \caption{Parameters of the FZCGS Algorithm} 
    \label{tab:fzcgs_params}
@@ -521,20 +521,11 @@ loss against iteration count, query count and running time, as the below graphs 
    \includegraphics*[scale=0.35]{img/FZCGS_loss_vs_runningtime.png}
 \end{center}
 
-It is clear from the graphs that 200 iterations are enough for FZCGS to converge to a good loss,
+It is clear from the graphs that 100 iterations are enough for FZCGS to converge to a good loss,
 though, since it uses multiple stochastic examples at each epoch for each direction analyzed, 
-performances considering query count and time are where FZCGS presents criticalities.
+performances considering query count and running time are where FZCGS presents criticalities.
 In fact, as we will discuss later, it is the worst algorithm in terms of running time between the ones
 considered in this study. 
-
-Moreover, we can see that after around 50 iterations, the algorithm stops 
-improving in regards of the overall loss. This has to be attributed to the \texttt{Loss Attack} dropping
-to zero, and this makes FZCGS converge to a higher loss compared to other SGFFW variants, as we show in the next section.
-The following graph shows this behaviour:
-
-\begin{center}
-   \includegraphics*[scale=0.45]{img/FZCGS_Losses.png}
-\end{center}
 
 
 \subsection{SGFFW}
@@ -553,15 +544,15 @@ comparing the overall losses against iteration count, query count and running ti
        \hline
        nStage & 200 & Iterations\\
        \hline
-       gamma & $\frac{2}{t+8}$ & gamma parameter \\
+       gamma & $\frac{2}{t+8}$ & $\gamma$ parameter \\
        \hline
        m & 50 & Number of random vectors\\
        \hline
-       s (RDSA) & 8 & Value for $\|\delta\|_{\infty} \leq s$\\
-       s (I-RDSA) & 4 & \\
+       s (RDSA) & 8 & \\
+       s (I-RDSA) & 4 & Value for $\|\delta\|_{\infty} \leq s$ \\
        s (I-RDSA) & 4 & \\
        \hline
-   \end{tabular}
+   \end{tabular}\\
    \
    \caption{Parameters of the SGFFW Algorithm} 
    \label{tab:sgffw_params}
@@ -608,43 +599,41 @@ In this section, we are going to compare all the algorithms and determine which 
 taking into account the best loss achieved, the last loss computed, 
 the iteration count, the query count and running time, measured in hours.
 
-\begin{table}[h]
-   \centering
+\begin{center}
    \begin{tabular}{ccc}
        \hline
        \textbf{Algorithm} & \textbf{Metric} & \textbf{Value} \\
        \hline
-       FZCGS & Best Loss & 12.689 @ 16th it.\\
-            & Last Loss & 16.9\\
-            & Iteration Count & 200\\
-            & Query Count & 2198768\\
-            & RunTime (Hrs) & 39.4\\
+       FZCGS & Best Loss & 7.283\\
+            & Last Loss & 7.312\\
+            & Iteration Count & 100\\
+            & Query Count & 1100736\\
+            & Running Time (Hrs) & 20.1\\
        \hline
-       SGFFW-RDSA & Best Loss & 16.9 @ 5788th it.\\
+       SGFFW-RDSA & Best Loss & 16.9\\
                   & Last Loss & 18.922\\
                   & Iteration Count & 6000\\
                   & Query Count & 12000\\
-                  & RunTime (Hrs) & 0.43\\
+                  & Running Time (Hrs) & 0.43\\
        \hline
-       SGFFW-I-RDSA & Best Loss & 8.96 @ 245th it.\\
+       SGFFW-I-RDSA & Best Loss & 8.96 \\
                     & Last Loss & 12.156\\
                     & Iteration Count & 500\\
                     & Query Count & 55000\\
-                    & RunTime (Hrs) & 1.3\\
+                    & Running Time (Hrs) & 1.3\\
        \hline
-       SGFFW-KWSA & Best Loss & 10.647 @ 199th it.\\
+       SGFFW-KWSA & Best Loss & 10.647\\
                   & Last Loss & 10.647\\
                   & Iteration Count & 200\\
                   & Query Count & 313600\\
-                  & RunTime (Hrs) & 7.7\\
+                  & Running Time (Hrs) & 7.7\\
        \hline
-   \end{tabular}
+   \end{tabular}\\
    \
-   \caption{Overall results and statistics compared} 
-   \label{tab:overall_results}
-\end{table}
+\end{center}
 
-Notably, we see that I-RDSA converged to the best loss, followed by KWSA and FZCGS.
+
+Notably, we see that I-RDSA converged to the best loss after FZCGS, followed by KWSA.
 RDSA, while being the fastest, converged to the worst loss between all algorithms.
 
 Below, the result graphs are presented. Each graph is also replotted
@@ -681,11 +670,12 @@ while limiting the x-axis, to better appreciate the behaviour of each algorithm.
 
 \section{Conclusion}
 
-Overall, there is no overall best method, and each one has its own strengths and weaknesses. \\
+Overall, there is no best method, and each one has its own strengths and weaknesses. \\
 
-From our study, FZCGS and SGFFW with KWSA had the best performance when considering iterations;
+From our study, FZCGS and SGFFW with KWSA had the best performance when considering iterations,
+with FZCGS only requiring 100 iterations to converge;
 however, when compared to all of the SGFFW variants, they are the worst in terms
-of query count and running time, making them less favourable.
+of query count and running time, making them less favourable. \\
 
 SGFFW with RDSA is the fastest for running time, but having the
 worst iterations count required to converge and reaching the highest loss among all algorithms considered. \\
