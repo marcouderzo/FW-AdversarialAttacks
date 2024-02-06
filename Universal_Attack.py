@@ -46,6 +46,8 @@ def main():
     
     data, model =  MNIST(), MNISTModel(restore="models/mnist", use_log=True)
     origImgs, origLabels, origImgID = util.generate_attack_data_set(data, model, MGR)
+
+    # Initialize the adversarial perturbation as a zero array of the same shape as the target images.
     delImgAT_Init = np.zeros(origImgs[0].shape)
     objfunc = ObjectiveFunc.OBJFUNC(MGR, model, origImgs, origLabels)
 
@@ -66,10 +68,31 @@ def main():
     else:
         print('Please specify a valid optimizer')
 
+
+    # After obtaining the adversarial perturbation, iterate over each image to generate and save adversarial examples.
     for idx_ImgID in range(MGR.parSet['nFunc']):
         currentID = origImgID[idx_ImgID]
+
+        # Predict the original label for the current image.
+        # np.expand_dims is used because TensorFlow expects the input to be batched. That is, even if we only predicting on a single image, 
+        # the model expects it to be within a batch - a 4D array with dimensions representing [batch_size, height, width, channels]. 
+        # np.expand_dims adds an additional dimension to origImgs[idx_ImgID], which is a single image, 
+        # turning a 3D array into a 4D array with a batch size of 1.
         orig_prob = model.model.predict(np.expand_dims(origImgs[idx_ImgID], axis=0))
+
+        # Apply the perturbation to the original image.
+        # Usage of tanh and arctanh: 
+        # - np.arctanh: This function is applied to the scaled original image origImgs[idx_ImgID]*1.9999999. 
+        #               The scaling by 1.9999999 is done to ensure the pixel values are within the domain of the arctanh function, which is (-1, 1). 
+        #               This is important because arctanh has singularities at -1 and 1.
+        # - Adding delImgAT: The adversarial perturbation delImgAT is then added to this 'arctanh' space. 
+        #                    Since the arctanh is an increasing function, adding a perturbation in this space corresponds to 
+        #                    adding a perturbation to the original image intensities in a nonlinear way, which might be beneficial for the attack.
+        # - np.tanh: After adding the perturbation, tanh is applied. tanh has a range of (-1, 1), 
+        #            which maps the modified values back to valid image intensities.
         advImg = np.tanh(np.arctanh(origImgs[idx_ImgID]*1.9999999)+delImgAT)/2.0
+
+        # Predict the probability of the adversarial image.
         adv_prob  = model.model.predict(np.expand_dims(advImg, axis=0))
 
         suffix = "id{}_Orig{}_Adv{}".format(currentID, np.argmax(orig_prob), np.argmax(adv_prob))

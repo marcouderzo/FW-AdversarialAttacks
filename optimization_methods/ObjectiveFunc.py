@@ -58,6 +58,7 @@ class OBJFUNC:
 
     def evaluate(self, delImgAT, randBatchIdx, addQueryCount = True):
 
+        # If no specific batch indices are provided, use all nFunc component funtions
         if( randBatchIdx.size == 0 ):
             randBatchIdx = np.arange(0, self.nFunc)
         batchSize = randBatchIdx.size
@@ -72,18 +73,50 @@ class OBJFUNC:
         ####################################################################
 
         origLabels_Batched = self.origLabels[randBatchIdx]
+
+        # Prepare the perturbed images for all components, but only a batch will be used later
         delImgsAT = np.repeat(np.expand_dims(delImgAT, axis=0), self.nFunc, axis=0)
+
+        # Apply the perturbation to the original images and scale to [0, 1] range using the tanh function
         advImgs = np.tanh(self.origImgsAT + delImgsAT)/2.0
+
         advImgs_Batched = advImgs[randBatchIdx]
 
         if(addQueryCount):
             self.query_count += batchSize
 
+        # Predict the scores of the adversarial images with MNIST model
         Score_AdvImgs_Batched = self.model.model.predict(advImgs_Batched)
+
+        
+        # Score_TargetLab and Score_NonTargetLab are used to compute the loss components 
+        # for the correct class and the most competitive incorrect class, respectively.
+
+        # Compute the score for the target label by taking the dot product of the original labels
+        # (one-hot encoded) with the predicted scores, and apply clipping to avoid log(0)
         Score_TargetLab = np.maximum(1e-20, np.sum(origLabels_Batched*Score_AdvImgs_Batched, 1))
+
+        # Compute the score for the non-target label by finding the maximum predicted score for
+        # non-target classes, and apply clipping as before
         Score_NonTargetLab = np.maximum(1e-20, np.amax((1-origLabels_Batched)*Score_AdvImgs_Batched - (origLabels_Batched*10000),1))
+
+
+
+        # Calculate the adversarial loss as the maximum of zero and the difference between the
+        # negative log score for non-target and target labels. 
+        # This represents the logit loss for the adversarial attack component.
+        # LOGIT LOSS: the cross-entropy loss is a loss function used in binary classification tasks. 
+        # It measures the performance of a classification model whose output is a probability value between 0 and 1. 
+        # Logit loss increases as the predicted probability diverges from the actual label. 
+        # It's used when the model outputs a probability for the class label, rather than just the most likely class.
         self.Loss_Attack = np.amax(np.maximum(0.0, -np.log(Score_NonTargetLab) + np.log(Score_TargetLab) ) )
+
+        # Compute the L2 loss as the mean squared difference between the adversarial and original
+        # images, scaled by the image size. This represents the perturbation's magnitude.
         self.Loss_L2 = self.imageSize * np.mean(np.square(advImgs-self.origImgs)/2.0)
+
+        # The overall loss is a weighted sum of the L2 loss and the adversarial attack loss,
+        # with the const weighting parameter.
         self.Loss_Overall = self.Loss_L2 + self.const*self.Loss_Attack
 
         return self.Loss_Overall
