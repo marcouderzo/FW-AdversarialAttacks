@@ -45,7 +45,7 @@
 ## Project Description
 
  The goal of this project is to compare the behaviour and performance
- of two three Zeroth-Order variants of the Frank-Wolfe Algorithm, aimed at 
+ of two Zeroth-Order variants of the Frank-Wolfe Algorithm, aimed at 
  solving constrained optimization problems with a better iteration complexity,
  expecially with respect to oracle queries.
  
